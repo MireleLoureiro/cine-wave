@@ -1,0 +1,47 @@
+.movie-card {
+    background: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.movie-card_poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.movie-card_info {
+    padding: 12px;
+}
+
+.movie-card_title {
+    color: white;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;  /* estilo flexbox, modelos antigos */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.movie-card_year {
+    color: #aaa;
+    font-size: 12px;
+    margin: 0 0 6px 0;
+}
+
+.movie-card_rating {
+    color: #ffd700;
+    font-size: 12px;
+    font-weight: bold;
+}
