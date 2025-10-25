@@ -1,0 +1,124 @@
+/* src/pages/Home/Home.css */
+.home {
+  min-height: 100vh;
+  background: #141414;
+}
+
+/* Banner Principal */
+.home__banner {
+  position: relative;
+  height: 70vh;
+  margin-bottom: 40px;
+}
+
+.home__banner-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.home__banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    #141414 0%,
+    transparent 40%,
+    transparent 100%
+  );
+}
+
+.home__banner-content {
+  position: absolute;
+  bottom: 100px;
+  left: 40px;
+  max-width: 500px;
+  z-index: 2;
+}
+
+.home__banner-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.home__banner-overview {
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: white;
+}
+
+.home__banner-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.home__banner-button {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home__banner-button--primary {
+  background: white;
+  color: black;
+}
+
+.home__banner-button--primary:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.home__banner-button--secondary {
+  background: rgba(109, 109, 110, 0.7);
+  color: white;
+}
+
+.home__banner-button--secondary:hover {
+  background: rgba(109, 109, 110, 0.9);
+}
+
+/* Conteúdo */
+.home__content {
+  padding-bottom: 40px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .home__banner {
+    height: 50vh;
+  }
+  
+  .home__banner-content {
+    left: 20px;
+    bottom: 60px;
+    max-width: 300px;
+  }
+  
+  .home__banner-title {
+    font-size: 32px;
+  }
+  
+  .home__banner-overview {
+    font-size: 14px;
+  }
+}

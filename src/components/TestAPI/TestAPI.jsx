@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+
+// service
 import { movieService } from '../../services/api';
+
+// components
 import MovieCard from '../MovieCard/MovieCard';
+import Loading from "../Loading/Loading";
+
+// css
 import './TestAPI.css';
 
 const TestAPI = () => {
@@ -33,7 +40,7 @@ const TestAPI = () => {
         return (
             <div className="test-api">
                 <h2>🔄️ Conectando com TMDB...</h2>
-                <loading message="Carregando filmes..." />
+                <Loading message="Carregando filmes..." />
             </div>
         );
     }
@@ -53,7 +60,7 @@ const TestAPI = () => {
             <h2>🎬 Teste da API TMDB - Funcionando ✅</h2>
             <p>Filmes populares carregados com sucesso: { movies.length }</p>
             <div className="movies-grid">
-                {movies.map(movie => (
+                {movies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie}/>
                 ))}
             </div>

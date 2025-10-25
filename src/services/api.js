@@ -24,9 +24,9 @@ tmdbAPI.interceptors.response.use(
 export const movieService = {
     getPopular: () => tmdbAPI.get('/movie/popular'),
     getTrending: () => tmdbAPI.get('/trending/movie/week'),     //filmes em tendência
-    getByGenre: (genreId) => tmdbAPI.get('/discover/movie', {params: { with_genres: genreId } }),
-    getDetails: (movieId) => tmdbAPI.get(`/movie/${movieId}`, {params: { append_to_response: 'credits,videos,similar' } }),
-    search: (query) => tmdbAPI.get('/search/movie', {params: { query } } )
+    getByGenre: (genreId) => tmdbAPI.get('/discover/movie', { params: { with_genres: genreId } }),
+    getDetails: (movieId) => tmdbAPI.get(`/movie/${movieId}`, { params: { append_to_response: 'credits,videos,similar' } }),
+    search: (query) => tmdbAPI.get('/search/movie', { params: { query } } )
 };
 
 // Serviços para séries
