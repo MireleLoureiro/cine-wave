@@ -1,0 +1,37 @@
+.favorite-button {
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.favorite-button:hover {
+    background: rgba(0, 0, 0, 0.9); 
+    transform: scale(1.1);
+}
+
+.favorite-button--active {
+    background: rgba(229, 9, 20, 0.8);
+}
+
+.favorite-button--small {
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.favorite-button--medium {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.favorite-button--large {
+  width: 50px;
+  height: 50px;
+  font-size: 22px;
+}
