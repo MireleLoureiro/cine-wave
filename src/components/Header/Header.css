@@ -21,6 +21,12 @@
     width: auto;
 }
 
+.header__search {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 40px;
+}
+
 .header__nav {
     display: flex;
     gap: 24px;
@@ -51,6 +57,11 @@
     .header__logo-image {
         height: 30px;
     }
+
+    .header__search {
+        margin: 0 20px;
+        max-width: 300px;
+    }
     
     .header__nav {
         gap: 16px;
@@ -62,6 +73,10 @@
 }
 
 @media (max-width: 480px) {
+    .header__search {
+        display: none;
+    }
+
     .header__nav {
         gap: 12px;
     }

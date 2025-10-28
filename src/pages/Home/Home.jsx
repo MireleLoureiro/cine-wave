@@ -31,47 +31,92 @@ const Home = () => {
 
                 // carrega todas as categorias
                 const categoriesConfig = [
-                    {
-                        id: 'trending_movies',
-                        name: '🎬 Em Tendência',
-                        fetchData: () => movieService.getTrending()
-                    },
-                    {
-                        id: 'popular_movies',
-                        name: '🔥 Populares no Momento',
-                        fetchData: () => movieService.getPopular()
-                    },
-                    {
-                        id: 'popular_tv',
-                        name: '📺 Séries em Alta',
-                        fetchData: () => tvService.getPopular()
-                    },
-                    {
-                        id: 'action',
-                        name: '💥 Ação e Aventura',
-                        fetchData: () => movieService.getByGenre(CATEGORIES.ACTION)
-                    },
-                    {
-                        id: 'comedy',
-                        name: '😂 Comédias',
-                        fetchData: () => movieService.getByGenre(CATEGORIES.COMEDY)
-                    },
-                    {
-                        id: 'drama_tv',
-                        name: '🎭 Dramas',
-                        fetchData: () => tvService.getByGenre(CATEGORIES.DRAMA)
-                    },
-                    {
-                        id: 'horror',
-                        name: '👻 Terror',
-                        fetchData: () => movieService.getByGenre(CATEGORIES.HORROR)
-                    },
-                    {
-                        id: 'documentary',
-                        name: '📝 Documentários',
-                        fetchData: () => movieService.getByGenre(CATEGORIES.DOCUMENTARY)
+                {
+                    id: 'trending_movies',
+                    name: '🎬 Em Tendência',
+                    fetchData: () => movieService.getTrending()
+                },
+                {
+                    id: 'popular_movies', 
+                    name: '🔥 Filmes Populares',
+                    fetchData: () => movieService.getPopular()
+                },
+                {
+                    id: 'popular_tv',
+                    name: '📺 Séries em Alta', 
+                    fetchData: () => tvService.getPopular()
+                },
+                {
+                    id: 'action',
+                    name: '💥 Ação',
+                    fetchData: () => movieService.getByGenre(CATEGORIES.ACTION)
+                },
+                {
+                    id: 'comedy',
+                    name: '😂 Comédia',
+                    fetchData: () => movieService.getByGenre(CATEGORIES.COMEDY)
+                },
+                // 👇 ANIMES (SÉRIES JAPONESAS ESPECÍFICAS)
+                {
+                    id: 'anime',
+                    name: '🎌 Animes',
+                    fetchData: async () => {
+                        try {
+                            console.log('🎌 Buscando animes...');
+                            // IDs de animes populares japoneses
+                            const popularAnimeIds = [
+                                1429,    // Naruto
+                                1399,    // Attack on Titan
+                                65930,   // Demon Slayer
+                                4629,    // One Piece
+                                62852,   // Jujutsu Kaisen
+                                13916,   // Death Note
+                                46298,   // Tokyo Ghoul
+                                65949,   // My Hero Academia
+                                37854,   // One-Punch Man
+                                68845,   // Dragon Ball Super
+                            ];
+                            
+                            // Busca os detalhes de cada anime
+                            const promises = popularAnimeIds.map(id => 
+                                tvService.getDetails(id).catch((error) => {
+                                    console.error(`Erro ao buscar anime ID ${id}:`, error);
+                                    return null;
+                                })
+                            );
+                            
+                            const results = await Promise.all(promises);
+                            const animes = results
+                                .filter(show => show !== null && show.data)
+                                .map(r => r.data)
+                                .slice(0, 8); // Limita a 8 animes
+                            
+                            console.log('✅ Animes carregados:', animes.length);
+                            return { data: { results: animes } };
+                            
+                        } catch (error) {
+                            console.error('❌ Erro ao buscar animes:', error);
+                            return { data: { results: [] } };
+                        }
                     }
-                ];
+                },
+                // 👇 ANIMAÇÃO (FILMES DE ANIMAÇÃO EM GERAL)
+                {
+                    id: 'animation_movies',
+                    name: '🎬 Filmes de Animação',
+                    fetchData: () => movieService.getByGenre(CATEGORIES.ANIMATION)
+                },
+                {
+                    id: 'fantasy',
+                    name: '🐉 Fantasia',
+                    fetchData: () => movieService.getByGenre(CATEGORIES.FANTASY)
+                },
+                {
+                    id: 'drama',
+                    name: '🎭 Drama',
+                    fetchData: () => tvService.getByGenre(CATEGORIES.DRAMA)
+                }
+            ];
 
                 const categoriesData = [];
                 

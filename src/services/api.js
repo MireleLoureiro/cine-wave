@@ -25,6 +25,7 @@ export const movieService = {
     getPopular: () => tmdbAPI.get('/movie/popular'),
     getTrending: () => tmdbAPI.get('/trending/movie/week'),     //filmes em tendência
     getByGenre: (genreId) => tmdbAPI.get('/discover/movie', { params: { with_genres: genreId } }),
+    getGenres: () => tmdbAPI.get('/genre/movie/list'),
     getDetails: (movieId) => tmdbAPI.get(`/movie/${movieId}`, { params: { append_to_response: 'credits,videos,similar' } }),
     search: (query) => tmdbAPI.get('/search/movie', { params: { query } } )
 };
@@ -34,9 +35,12 @@ export const tvService = {
     getPopular: () => tmdbAPI.get('/tv/popular'),
     getTrending: () => tmdbAPI.get('/trending/tv/week'),
     getByGenre: () => tmdbAPI.get('/discover/tv', { params: { append_to_response: 'credits,videos,similar' } }),
+    getGenres: () => tmdbAPI.get('/genre/tv/list'),
     getDetails: (tvId) => tmdbAPI.get(`/tv/${tvId}`, { params: { append_to_response: 'credits,videos,similar' } }),
-    search: (query) => tmdbAPI.get('/search/tv', { params: { query } })
+    search: (query) => tmdbAPI.get('/search/tv', { params: { query } }),
+    getSeasonDetails: (tvId, seasonNumber) => tmdbAPI.get(`/tv/${tvId}/season/${seasonNumber}`)
 };
+
 
 // Serviço de busca MULTI (filmes + séries juntos)
 export const searchService = {
@@ -66,5 +70,7 @@ export const CATEGORIES = {
     COMEDY: 35,
     DRAMA: 18,
     HORROR: 27,
-    DOCUMENTARY: 99
+    DOCUMENTARY: 99,
+    ANIMATION: 16,
+    FANTASY: 14
 };

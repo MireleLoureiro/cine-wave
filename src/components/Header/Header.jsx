@@ -5,6 +5,10 @@ import logo from '../../assets/images/logo.png';
 // context
 import { useFavorites } from "../../contexts/FavoritesContext";
 
+
+// components
+import SearchBar from "../SearchBar/SearchBar";
+
 // css
 import './Header.css';
 
@@ -17,8 +21,12 @@ const Header = () => {
                 <Link to="/">
                     <img src={logo} alt="CineWave" className="header__logo-image" />  
                 </Link>
+                <div className="header__search">
+                    <SearchBar />
+                </div>
                 <nav className="header__nav">
                     <Link to="/" className="header__nav-item">Início</Link>
+                    <Link to="/categories" className="header__nav-item">Categorias</Link>
                     <Link to="/search" className="header__nav-item">Search</Link>
                     <Link to="/favorites" className="header__nav-item">
                         Minha Lista {favoritesCount > 0 && `(${favoritesCount})`}
