@@ -1,9 +1,8 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
+import { useAuth } from './AuthContext';
 
-// Criar contexto
 const FavoritesContext = createContext();
 
-// Hook personalizado
 export const useFavorites = () => {
     const context = useContext(FavoritesContext);
     if (!context) {
@@ -12,29 +11,34 @@ export const useFavorites = () => {
     return context;
 };
 
-// Provider principal
 export const FavoritesProvider = ({ children }) => {
     const [favorites, setFavorites] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    
+    const { user, isAuthenticated } = useAuth();
 
-    // 🎯 CARREGAR FAVORITOS - useEffect 1
+    // 🎯 CARREGAR FAVORITOS - Apenas se usuário estiver logado
     useEffect(() => {
         const loadFavorites = () => {
             try {
-                const savedFavorites = localStorage.getItem('cinewave-favorites');
-                
-                if (savedFavorites) {
-                    const parsed = JSON.parse(savedFavorites);
-                    console.log('✅ Favoritos carregados:', parsed.length, 'itens');
+                if (isAuthenticated && user) {
+                    const userFavorites = localStorage.getItem(`cinewave-favorites-${user.id}`);
                     
-                    // Validar e limpar dados corrompidos
-                    const validFavorites = Array.isArray(parsed) 
-                        ? parsed.filter(item => item && item.id && (item.title || item.name))
-                        : [];
-                    
-                    setFavorites(validFavorites);
+                    if (userFavorites) {
+                        const parsed = JSON.parse(userFavorites);
+                        console.log('✅ Favoritos carregados para usuário:', user.email, parsed.length, 'itens');
+                        
+                        const validFavorites = Array.isArray(parsed) 
+                            ? parsed.filter(item => item && item.id && (item.title || item.name))
+                            : [];
+                        
+                        setFavorites(validFavorites);
+                    } else {
+                        console.log('ℹ️ Nenhum favorito encontrado para usuário:', user.email);
+                        setFavorites([]);
+                    }
                 } else {
-                    console.log('ℹ️ Nenhum favorito encontrado no localStorage');
+                    // Usuário não logado - limpar favoritos
                     setFavorites([]);
                 }
             } catch (error) {
@@ -46,98 +50,119 @@ export const FavoritesProvider = ({ children }) => {
         };
 
         loadFavorites();
-    }, []);
+    }, [isAuthenticated, user]);
 
-    // 🎯 SALVAR FAVORITOS - useEffect 2 (com throttle)
+    // 🎯 SALVAR FAVORITOS - Apenas se usuário estiver logado
     useEffect(() => {
-        if (!isLoaded) return;
+        if (!isLoaded || !isAuthenticated || !user) return;
         
         const timeoutId = setTimeout(() => {
             try {
-                console.log('💾 Salvando favoritos:', favorites.length, 'itens');
-                localStorage.setItem('cinewave-favorites', JSON.stringify(favorites));
+                console.log('💾 Salvando favoritos para usuário:', user.email, favorites.length, 'itens');
+                localStorage.setItem(`cinewave-favorites-${user.id}`, JSON.stringify(favorites));
             } catch (error) {
                 console.error('❌ Erro ao salvar favoritos:', error);
                 
-                // Fallback: tentar salvar sem os dados muito grandes
                 if (error.name === 'QuotaExceededError') {
                     const simplifiedFavorites = favorites.map(({ id, title, name, poster_path, media_type }) => ({
                         id, title, name, poster_path, media_type
                     }));
-                    localStorage.setItem('cinewave-favorites', JSON.stringify(simplifiedFavorites));
+                    localStorage.setItem(`cinewave-favorites-${user.id}`, JSON.stringify(simplifiedFavorites));
                     console.log('🔄 Favoritos simplificados salvos devido a limite de espaço');
                 }
             }
-        }, 500); // Throttle de 500ms
+        }, 500);
 
         return () => clearTimeout(timeoutId);
-    }, [favorites, isLoaded]);
+    }, [favorites, isLoaded, isAuthenticated, user]);
 
-    // 🎯 ADICIONAR FAVORITO
+    // 🎯 ADICIONAR FAVORITO - Apenas se logado
     const addFavorite = useCallback((movie) => {
+        if (!isAuthenticated) {
+            console.warn('⚠️ Usuário precisa estar logado para adicionar favoritos');
+            return { success: false, requiresLogin: true };
+        }
+        
         if (!movie?.id) {
             console.warn('⚠️ Tentativa de adicionar favorito inválido:', movie);
-            return false;
+            return { success: false, error: 'Filme inválido' };
         }
         
         setFavorites(prev => {
             const exists = prev.find(item => item.id === movie.id);
             if (!exists) {
-                // Garantir media_type
                 const enhancedMovie = {
                     ...movie,
                     media_type: movie.media_type || (movie.first_air_date ? 'tv' : 'movie'),
-                    // Timestamp para ordenação
-                    addedAt: new Date().toISOString()
+                    addedAt: new Date().toISOString(),
+                    userId: user.id // Associar ao usuário
                 };
                 
-                console.log('❤️ Adicionando favorito:', enhancedMovie.title || enhancedMovie.name);
+                console.log('❤️ Adicionando favorito para usuário:', user.email, enhancedMovie.title || enhancedMovie.name);
                 return [...prev, enhancedMovie];
             }
             console.log('ℹ️ Favorito já existe:', movie.title || movie.name);
             return prev;
         });
         
-        return true;
-    }, []);
+        return { success: true };
+    }, [isAuthenticated, user]);
 
     // 🎯 REMOVER FAVORITO
     const removeFavorite = useCallback((movieId) => {
+        if (!isAuthenticated) {
+            console.warn('⚠️ Usuário precisa estar logado para remover favoritos');
+            return { success: false, requiresLogin: true };
+        }
+        
         setFavorites(prev => {
             const updated = prev.filter(item => item.id !== movieId);
-            console.log('🗑️ Removendo favorito ID:', movieId);
+            console.log('🗑️ Removendo favorito ID:', movieId, 'do usuário:', user.email);
             return updated;
         });
-    }, []);
+        
+        return { success: true };
+    }, [isAuthenticated, user]);
 
     // 🎯 VERIFICAR SE É FAVORITO
     const isFavorite = useCallback((movieId) => {
-        return favorites.some(item => item.id === movieId);
-    }, [favorites]);
+        return isAuthenticated && favorites.some(item => item.id === movieId);
+    }, [favorites, isAuthenticated]);
 
-    // 🎯 ALTERNAR FAVORITO
+    // 🎯 ALTERNAR FAVORITO - Com verificação de login
     const toggleFavorite = useCallback((movie) => {
+        if (!isAuthenticated) {
+            console.warn('⚠️ Usuário precisa estar logado para favoritar');
+            return { success: false, requiresLogin: true };
+        }
+        
         if (!movie?.id) {
             console.error('❌ Não é possível alternar favorito: filme inválido');
-            return false;
+            return { success: false, error: 'Filme inválido' };
         }
         
         if (isFavorite(movie.id)) {
             removeFavorite(movie.id);
             console.log('🔀 Removido dos favoritos:', movie.title || movie.name);
-            return false;
+            return { success: true, favorited: false };
         } else {
             addFavorite(movie);
             console.log('🔀 Adicionado aos favoritos:', movie.title || movie.name);
-            return true;
+            return { success: true, favorited: true };
         }
-    }, [isFavorite, addFavorite, removeFavorite]);
+    }, [isAuthenticated, isFavorite, addFavorite, removeFavorite]);
 
     // 🎯 LIMPAR TODOS OS FAVORITOS
     const clearFavorites = useCallback(() => {
+        if (!isAuthenticated) {
+            return { success: false, requiresLogin: true };
+        }
+        
         setFavorites([]);
-        console.log('🧹 Todos os favoritos foram removidos');
-    }, []);
+        localStorage.removeItem(`cinewave-favorites-${user.id}`);
+        console.log('🧹 Todos os favoritos foram removidos para usuário:', user.email);
+        return { success: true };
+    }, [isAuthenticated, user]);
 
     // 🎯 OBTER FAVORITOS POR TIPO
     const getFavoritesByType = useCallback((type) => {
@@ -181,7 +206,7 @@ export const FavoritesProvider = ({ children }) => {
         favorites,
         isLoaded,
         
-        // Ações básicas
+        // Ações básicas (agora retornam status)
         addFavorite,
         removeFavorite,
         isFavorite,
@@ -199,7 +224,8 @@ export const FavoritesProvider = ({ children }) => {
         
         // Estados derivados
         hasFavorites: favorites.length > 0,
-        isEmpty: favorites.length === 0 && isLoaded
+        isEmpty: favorites.length === 0 && isLoaded,
+        requiresLogin: !isAuthenticated
     };
 
     return (
@@ -209,21 +235,30 @@ export const FavoritesProvider = ({ children }) => {
     );
 };
 
-// 🎯 HOOK ADICIONAL PARA FAVORITE BUTTON
+// 🎯 HOOK ADICIONAL PARA FAVORITE BUTTON (Com tratamento de login)
 export const useFavoriteActions = () => {
     const { toggleFavorite, isFavorite } = useFavorites();
+    const { isAuthenticated } = useAuth();
     
     const getFavoriteStatus = useCallback((movieId) => {
         return isFavorite(movieId);
     }, [isFavorite]);
 
     const handleToggleFavorite = useCallback((movie) => {
-        return toggleFavorite(movie);
+        const result = toggleFavorite(movie);
+        
+        if (result.requiresLogin) {
+            // Pode ser usado para mostrar modal de login
+            return { requiresLogin: true };
+        }
+        
+        return result;
     }, [toggleFavorite]);
 
     return {
         getFavoriteStatus,
         handleToggleFavorite,
-        isFavorite // alias para compatibilidade
+        isFavorite,
+        canFavorite: isAuthenticated
     };
 };

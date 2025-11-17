@@ -1,50 +1,58 @@
+/* components/Header/Header.css */
 .header {
-    background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
-    padding: 20px 40px;
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    background: transparent;
     transition: all 0.3s ease;
+    padding: 15px 0;
 }
 
 .header.scrolled {
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(20, 20, 20, 0.95);
     backdrop-filter: blur(10px);
-    padding: 15px 40px;
+    padding: 10px 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .header__container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     position: relative;
 }
 
+/* Logo */
 .header__logo {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    z-index: 1001;
 }
 
 .header__logo-image {
-    height: 60px;
+    height: 35px;
     width: auto;
-    transition: height 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
-.header.scrolled .header__logo-image {
-    height: 45px;
+.header__logo:hover .header__logo-image {
+    transform: scale(1.05);
 }
 
+/* Search Bar - Desktop */
 .header__search {
     flex: 1;
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 40px;
 }
 
-/* Search Mobile */
+/* Botão Search Mobile */
 .header__search-toggle {
     display: none;
     background: none;
@@ -53,32 +61,235 @@
     font-size: 20px;
     cursor: pointer;
     padding: 8px;
-    margin-right: 15px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
 }
 
+.header__search-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Search Bar Mobile */
 .header__search-mobile {
     display: none;
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    right: 0;
+    background: #141414;
     padding: 20px;
-    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .header__search-close {
     position: absolute;
-    top: 20px;
+    top: 15px;
     right: 20px;
     background: none;
     border: none;
-    color: white;
+    color: #aaa;
     font-size: 18px;
     cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
-/* Menu Hamburger */
+.header__search-close:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Navegação Principal */
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.header__nav-item {
+    color: #e5e5e5;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 0;
+}
+
+.header__nav-item:hover {
+    color: white;
+}
+
+.header__nav-item.active {
+    color: #e50914;
+}
+
+.header__nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #e50914;
+    border-radius: 2px;
+}
+
+/* Botões de Autenticação */
+.header__auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header__login-button {
+    color: white;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.header__login-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.header__register-button {
+    background: #e50914;
+    color: white;
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.header__register-button:hover {
+    background: #f40612;
+    transform: translateY(-1px);
+}
+
+/* Menu do Usuário */
+.header__user-menu {
+    position: relative;
+}
+
+.header__user-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+.header__user-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.header__user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e50914, #b2070f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+}
+
+.header__user-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Dropdown do Usuário */
+.header__user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 10px 0;
+    min-width: 200px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    z-index: 1002;
+    animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header__user-info {
+    padding: 12px 16px;
+    border-bottom: 1px solid #333;
+}
+
+.header__user-info strong {
+    display: block;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.header__user-info span {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.header__dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    color: #e5e5e5;
+    text-decoration: none;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.header__dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.header__logout {
+    color: #e50914 !important;
+    border-top: 1px solid #333;
+    margin-top: 5px;
+    padding-top: 12px;
+}
+
+.header__logout:hover {
+    background: rgba(229, 9, 20, 0.1) !important;
+}
+
+/* Menu Hamburger Mobile */
 .header__menu-toggle {
     display: none;
     flex-direction: column;
@@ -90,10 +301,11 @@
 }
 
 .header__menu-toggle span {
-    width: 25px;
-    height: 3px;
+    width: 20px;
+    height: 2px;
     background: white;
     transition: all 0.3s ease;
+    transform-origin: center;
 }
 
 .header__menu-toggle.active span:nth-child(1) {
@@ -108,140 +320,221 @@
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Navegação */
-.header__nav {
-    display: flex;
-    gap: 24px;
+.header__theme-item {
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 16px;
+    margin-bottom: 5px;
 }
 
-.header__nav-item {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    position: relative;
-    padding: 8px 0;
-}
-
-.header__nav-item:hover {
-    color: #e50914;
-}
-
-.header__nav-item.active {
-    color: #e50914;
-}
-
-.header__nav-item::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #e50914;
-    transition: width 0.3s ease;
-}
-
-.header__nav-item:hover::after,
-.header__nav-item.active::after {
+.header__theme-item .theme-toggle {
     width: 100%;
+    justify-content: space-between;
+    padding: 0;
+    background: none !important;
+}
+
+.header__theme-item .theme-toggle:hover {
+    background: none !important;
 }
 
 /* ========== RESPONSIVO ========== */
 
 /* Tablet */
-@media (max-width: 768px) {
-    .header {
-        padding: 15px 20px;
+@media (max-width: 1024px) {
+    .header__container {
+        padding: 0 30px;
     }
     
-    .header.scrolled {
-        padding: 12px 20px;
-    }
-    
-    .header__logo-image {
-        height: 40px;
-    }
-
-    .header.scrolled .header__logo-image {
-        height: 35px;
-    }
-
     .header__search {
-        margin: 0 20px;
-        max-width: 300px;
+        max-width: 400px;
+        margin: 0 30px;
     }
     
     .header__nav {
-        gap: 16px;
-    }
-    
-    .header__nav-item {
-        font-size: 14px;
+        gap: 25px;
     }
 }
 
-/* Mobile */
-@media (max-width: 480px) {
+/* Mobile Large */
+@media (max-width: 768px) {
+    .header__container {
+        padding: 0 20px;
+    }
+    
     .header__search {
         display: none;
     }
-
+    
     .header__search-toggle {
         display: block;
+        order: 2;
     }
-
+    
     .header__search-mobile {
         display: block;
     }
-
-    .header__menu-toggle {
-        display: flex;
-    }
-
+    
     .header__nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.95);
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: #141414;
         flex-direction: column;
-        padding: 20px;
-        gap: 15px;
-        border-top: 1px solid #333;
+        padding: 80px 30px 30px;
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.5);
+        gap: 0;
     }
-
+    
     .header__nav.mobile-open {
-        display: flex;
+        left: 0;
     }
-
+    
     .header__nav-item {
-        padding: 12px 0;
+        padding: 15px 0;
         font-size: 16px;
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
     }
-
+    
     .header__nav-item:last-child {
         border-bottom: none;
     }
-}
-
-/* Mobile Pequeno */
-@media (max-width: 360px) {
-    .header {
-        padding: 12px 15px;
+    
+    .header__nav-item.active::after {
+        display: none;
     }
     
-    .header.scrolled {
-        padding: 10px 15px;
+    .header__auth-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .header__login-button,
+    .header__register-button {
+        text-align: center;
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    .header__user-menu {
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .header__user-button {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+    }
+    
+    .header__user-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 12px 12px 0 0;
+        animation: mobileDropdownUp 0.3s ease;
+    }
+    
+    @keyframes mobileDropdownUp {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+    
+    .header__menu-toggle {
+        display: flex;
+        order: 3;
+        z-index: 1001;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .header__container {
+        padding: 0 15px;
     }
     
     .header__logo-image {
-        height: 35px;
-    }
-
-    .header.scrolled .header__logo-image {
         height: 30px;
     }
+    
+    .header__search-mobile {
+        padding: 15px;
+    }
+    
+    .header__nav {
+        width: 100%;
+        padding: 70px 20px 20px;
+    }
+    
+    .header__user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .header__user-name {
+        font-size: 13px;
+    }
+}
+
+/* Overlay para mobile */
+.header__nav.mobile-open::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+
+/* Animações suaves */
+.header__nav-item,
+.header__user-button,
+.header__search-toggle,
+.header__menu-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estados de foco para acessibilidade */
+.header__nav-item:focus-visible,
+.header__user-button:focus-visible,
+.header__search-toggle:focus-visible,
+.header__menu-toggle:focus-visible {
+    outline: 2px solid #e50914;
+    outline-offset: 2px;
+}
+
+/* Loading state para quando estiver verificando autenticação */
+.header--loading .header__user-button {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.header--loading .header__user-avatar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    transform: translate(-50%, -50%);
 }

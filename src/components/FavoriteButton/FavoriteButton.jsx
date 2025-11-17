@@ -2,18 +2,26 @@ import React, { useState } from "react";
 
 // context
 import { useFavorites } from "../../contexts/FavoritesContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 // css
 import './FavoriteButton.css';
 
 const FavoriteButton = ({ movie, size = 'medium' }) => {
     const { isFavorite, toggleFavorite } = useFavorites();
+    const { isAuthenticated } = useAuth();
+    
     const [isAnimating, setIsAnimating] = useState(false);
     const isActive = isFavorite(movie.id);
 
     const handleClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        
+        // 🎯 Se não estiver logado, não faz nada (apenas mostra o cadeado)
+        if (!isAuthenticated) {
+            return;
+        }
         
         // Trigger animation
         if (!isActive) {
@@ -25,24 +33,33 @@ const FavoriteButton = ({ movie, size = 'medium' }) => {
     };
 
     const getEmoji = () => {
-        if (isActive) {
-            return '❤️'; // Coração preenchido
-        } else {
-            return '🤍'; // Coração vazio
-        }
+        if (!isAuthenticated) return '🔒'; // Cadeado se não logado
+        if (isActive) return '❤️'; // Coração preenchido
+        return '🤍'; // Coração vazio
+    };
+
+    const getTooltipText = () => {
+        if (!isAuthenticated) return 'Faça login para favoritar';
+        if (isActive) return 'Remover dos favoritos';
+        return 'Adicionar aos favoritos';
+    };
+
+    const getAriaLabel = () => {
+        if (!isAuthenticated) return 'Faça login para favoritar este conteúdo';
+        if (isActive) return `Remover ${movie.title || movie.name} dos favoritos`;
+        return `Adicionar ${movie.title || movie.name} aos favoritos`;
     };
 
     return (
         <button 
             className={`favorite-button favorite-button--${size} ${
                 isActive ? 'favorite-button--active' : ''
-            } ${isAnimating ? 'favorite-button--animating' : ''}`}
+            } ${isAnimating ? 'favorite-button--animating' : ''} ${
+                !isAuthenticated ? 'favorite-button--disabled' : ''
+            }`}
             onClick={handleClick}
-            aria-label={isActive ? 
-                `Remover ${movie.title || movie.name} dos favoritos` : 
-                `Adicionar ${movie.title || movie.name} aos favoritos`
-            }
-            title={isActive ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+            aria-label={getAriaLabel()}
+            title={getTooltipText()}
         >
             <span className="favorite-button__emoji">
                 {getEmoji()}

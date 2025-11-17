@@ -1,24 +1,24 @@
+// components/Header/Header.jsx (ATUALIZADO)
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import logo from '../../assets/images/logo.png';
-
-// context
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { useFavorites } from "../../contexts/FavoritesContext";
-
-// components
+import logo from '../../assets/images/logo.png';
 import SearchBar from "../SearchBar/SearchBar";
-
-// css
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
 import './Header.css';
 
 const Header = () => {
     const { favoritesCount } = useFavorites();
+    const { user, isAuthenticated, logout } = useAuth();
     const [isScrolled, setIsScrolled] = useState(false);
     const [showMobileSearch, setShowMobileSearch] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showUserMenu, setShowUserMenu] = useState(false);
+    
     const location = useLocation();
+    const navigate = useNavigate();
 
-    // Efeito para detectar scroll
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 100);
@@ -28,23 +28,21 @@ const Header = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Fechar menu mobile quando mudar de rota
     useEffect(() => {
         setShowMobileMenu(false);
         setShowMobileSearch(false);
+        setShowUserMenu(false);
     }, [location]);
 
-    // Fechar menu quando clicar fora (opcional)
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (showMobileMenu && !event.target.closest('.header__nav') && !event.target.closest('.header__menu-toggle')) {
-                setShowMobileMenu(false);
-            }
-        };
+    const handleLogout = () => {
+        logout();
+        setShowUserMenu(false);
+        navigate('/');
+    };
 
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-    }, [showMobileMenu]);
+    const handleUserMenuToggle = () => {
+        setShowUserMenu(!showUserMenu);
+    };
 
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
@@ -82,17 +80,6 @@ const Header = () => {
                     </div>
                 )}
 
-                {/* Menu Hamburger Mobile */}
-                <button 
-                    className={`header__menu-toggle ${showMobileMenu ? 'active' : ''}`}
-                    onClick={() => setShowMobileMenu(!showMobileMenu)}
-                    aria-label="Toggle menu"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-
                 {/* Navegação */}
                 <nav className={`header__nav ${showMobileMenu ? 'mobile-open' : ''}`}>
                     <Link 
@@ -113,13 +100,97 @@ const Header = () => {
                     >
                         Busca
                     </Link>
-                    <Link 
-                        to="/favorites" 
-                        className={`header__nav-item ${location.pathname === '/favorites' ? 'active' : ''}`}
-                    >
-                        Minha Lista {favoritesCount > 0 && `(${favoritesCount})`}
-                    </Link>
+                    
+                    {isAuthenticated ? (
+                        <>
+                            <Link 
+                                to="/favorites" 
+                                className={`header__nav-item ${location.pathname === '/favorites' ? 'active' : ''}`}
+                            >
+                                Minha Lista {favoritesCount > 0 && `(${favoritesCount})`}
+                            </Link>
+                            
+                            {/* Menu do Usuário */}
+                            <div className="header__user-menu">
+                                <button 
+                                    className="header__user-button"
+                                    onClick={handleUserMenuToggle}
+                                >
+                                    <span className="header__user-avatar">
+                                        {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                                    </span>
+                                    <span className="header__user-name">
+                                        {user?.name?.split(' ')[0] || 'Usuário'}
+                                    </span>
+                                </button>
+
+                                {showUserMenu && (
+                                    <div className="header__user-dropdown">
+                                        <div className="header__user-info">
+                                            <strong>{user?.name}</strong>
+                                            <span>{user?.email}</span>
+                                        </div>
+                                        <Link 
+                                            to="/profile" 
+                                            className="header__dropdown-item"
+                                            onClick={() => setShowUserMenu(false)}
+                                        ></Link>
+                                        <Link 
+                                            to="/profile" 
+                                            className="header__dropdown-item"
+                                            onClick={() => setShowUserMenu(false)}
+                                        >
+                                            Meu Perfil
+                                        </Link>
+                                        <div className="header__dropdown-item header__theme-item">
+                                            <ThemeToggle />
+                                        </div>
+                                        <Link 
+                                            to="/favorites" 
+                                            className="header__dropdown-item"
+                                            onClick={() => setShowUserMenu(false)}
+                                        >
+                                            Minha Lista
+                                        </Link>
+                                        <button 
+                                            className="header__dropdown-item header__logout"
+                                            onClick={handleLogout}
+                                        >
+                                            Sair
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </>
+                    ) : (
+                        <div className="header__auth-buttons">
+                            <Link 
+                                to="/login" 
+                                className="header__login-button"
+                            >
+                                Entrar
+                            </Link>
+                            <Link 
+                                to="/register" 
+                                className="header__register-button"
+                            >
+                                Cadastrar
+                            </Link>
+                        </div>
+                    )}
                 </nav>
+
+                {/* Menu Hamburger Mobile */}
+                <ThemeToggle />
+                <button 
+                    className={`header__menu-toggle ${showMobileMenu ? 'active' : ''}`}
+                    onClick={() => setShowMobileMenu(!showMobileMenu)}
+                    aria-label="Toggle menu"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </header>
     );

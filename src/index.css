@@ -1,13 +1,120 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 🎯 VARIÁVEIS CSS PARA OS TEMAS */
+:root {
+    /* Cores base - Dark Theme (default) */
+    --bg-primary: #141414;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #e5e5e5;
+    --text-muted: #aaa;
+    --accent-primary: #e50914;
+    --accent-secondary: #b2070f;
+    --border-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --overlay-bg: rgba(0, 0, 0, 0.8);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* 🎯 Light Theme */
+.light-theme {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --accent-primary: #e50914;
+    --accent-secondary: #b2070f;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --overlay-bg: rgba(255, 255, 255, 0.9);
+}
+
+/* 🎯 APLICAR VARIÁVEIS AOS ELEMENTOS */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Header */
+.header {
+    background: var(--bg-primary);
+}
+
+.header.scrolled {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Cards e Containers */
+.movie-card,
+.profile-container,
+.login-container,
+.register-container,
+.search-page,
+.categories-page {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Inputs */
+.form-input,
+.search-bar__input {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.form-input:focus {
+    border-color: var(--accent-primary);
+}
+
+/* Botões */
+.header__login-button {
+    color: var(--text-primary);
+}
+
+.header__login-button:hover {
+    background: var(--bg-tertiary);
+}
+
+/* Overlays e Modals */
+.movie-card__overlay,
+.login-prompt-overlay {
+    background: var(--overlay-bg);
+}
+
+/* Textos */
+.movie-card__title,
+.profile-header h1,
+.login-header h1 {
+    color: var(--text-primary);
+}
+
+.movie-card__year,
+.profile-header p,
+.login-header p {
+    color: var(--text-muted);
+}
+
+/* Bordas */
+.header__nav-item.active::after {
+    background: var(--accent-primary);
+}
+
+/* Sombras */
+.header.scrolled {
+    box-shadow: 0 2px 20px var(--shadow-color);
+}
+
+.movie-card:hover {
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+/* 🎯 Transições suaves para todos os elementos */
+* {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
 }

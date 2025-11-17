@@ -1,3 +1,4 @@
+// components/SearchBar/SearchBar.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import './SearchBar.css'
@@ -17,12 +18,22 @@ const useDebounce = (value, delay) => {
     return debouncedValue;
 };
 
-const SearchBar = ({ onSearch, instantSearch = false }) => {
-    const [query, setQuery] = useState('');
+const SearchBar = ({ 
+    onSearch, 
+    instantSearch = false, 
+    initialValue = '',
+    autoFocus = false 
+}) => {
+    const [query, setQuery] = useState(initialValue);
     const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate();
     
     const debouncedQuery = useDebounce(query, 500);
+
+    // 🎯 NOVO: Sincroniza com initialValue
+    useEffect(() => {
+        setQuery(initialValue);
+    }, [initialValue]);
 
     useEffect(() => {
         if (instantSearch && debouncedQuery.trim() && onSearch) {
@@ -67,6 +78,7 @@ const SearchBar = ({ onSearch, instantSearch = false }) => {
                     value={query}
                     onChange={handleChange}
                     className="search-bar__input"
+                    autoFocus={autoFocus}
                 />
                 {query && (
                     <button 
