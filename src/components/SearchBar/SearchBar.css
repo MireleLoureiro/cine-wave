@@ -4,8 +4,9 @@
 }
 
 .search-bar__container {
+    position: relative;
     display: flex;
-    background: rgba(255, 255, 2555, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* 👈 CORRIGIDO: removi o 5 extra */
     border-radius: 4px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -15,6 +16,7 @@
 .search-bar__container:focus-within {
     background: rgba(255, 255, 255, 0.15);
     border-color: #e50914;
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
 }
 
 .search-bar__input {
@@ -25,27 +27,92 @@
     color: white;
     font-size: 16px;
     outline: none;
+    width: 100%;
 }
 
 .search-bar__input::placeholder {
     color: #aaa;
 }
 
+/* Ajuste do padding quando tem botão de limpar */
+.search-bar__input:not(:placeholder-shown) {
+    padding-right: 40px;
+}
+
+/* Botão de Limpar */
+.search-bar__clear {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.search-bar__clear:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Botão de Busca */
 .search-bar__button {
     background: #e50914;
     border: none;
     padding: 12px 20px;
     color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
     font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
 }
 
-.search-bar__button:hover {
+.search-bar__button:hover:not(:disabled) {
     background: #f40612;
+    transform: scale(1.05);
 }
 
-/* responsivo */
+.search-bar__button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.search-bar__button--loading {
+    background: #b8070f !important;
+}
+
+/* Estados de foco para acessibilidade */
+.search-bar__input:focus {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.search-bar__button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+.search-bar__clear:focus {
+    outline: 2px solid #e50914;
+    outline-offset: 1px;
+}
+
+/* ========== RESPONSIVO ========== */
+
+/* Tablet */
 @media (max-width: 768px) {
     .search-bar {
         max-width: 300px;
@@ -56,13 +123,78 @@
         font-size: 14px;
     }
 
+    .search-bar__input:not(:placeholder-shown) {
+        padding-right: 35px;
+    }
+
     .search-bar__button {
         padding: 10px 16px;
+        min-width: 45px;
+    }
+
+    .search-bar__clear {
+        right: 45px;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
     }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
     .search-bar {
         max-width: 250px;
     }
+
+    .search-bar__input {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .search-bar__input:not(:placeholder-shown) {
+        padding-right: 30px;
+    }
+
+    .search-bar__button {
+        padding: 8px 12px;
+        min-width: 40px;
+        font-size: 14px;
+    }
+
+    .search-bar__clear {
+        right: 40px;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        padding: 2px 6px;
+    }
+}
+
+/* Mobile Pequeno */
+@media (max-width: 360px) {
+    .search-bar {
+        max-width: 200px;
+    }
+
+    .search-bar__input {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .search-bar__button {
+        padding: 6px 10px;
+        min-width: 35px;
+        font-size: 12px;
+    }
+}
+
+/* Animações */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+.search-bar__button--loading {
+    animation: pulse 1.5s infinite;
 }

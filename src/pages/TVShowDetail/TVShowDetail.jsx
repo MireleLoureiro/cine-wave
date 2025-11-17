@@ -1,4 +1,3 @@
-// src/pages/TVShowDetail/TVShowDetail.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -9,6 +8,7 @@ import { tvService, imageService } from '../../services/api';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import FavoriteButton from '../../components/FavoriteButton/FavoriteButton';
 import Loading from '../../components/Loading/Loading';
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 
 // css
 import './TVShowDetail.css';
@@ -20,6 +20,9 @@ const TVShowDetail = () => {
     const [expandedSeason, setExpandedSeason] = useState(null);
     const [seasonDetails, setSeasonDetails] = useState({});
     const [loadingEpisodes, setLoadingEpisodes] = useState({});
+    const [showVideoPlayer, setShowVideoPlayer] = useState(false);
+    const [selectedVideo, setSelectedVideo] = useState(null);
+    const [videos, setVideos] = useState([]);
 
     useEffect(() => {
         const fetchTVShowDetails = async () => {
@@ -27,6 +30,11 @@ const TVShowDetail = () => {
                 setLoading(true);
                 const response = await tvService.getDetails(id);
                 setTvShow(response.data);
+                
+                // 🎯 Buscar vídeos (trailers)
+                const videosResponse = await tvService.getVideos(id);
+                setVideos(videosResponse.data.results || []);
+                
             } catch (err) {
                 console.error('Erro ao buscar detalhes da série:', err);
             } finally {
@@ -39,7 +47,25 @@ const TVShowDetail = () => {
         }
     }, [id]);
 
-    // Buscar episódios de uma temporada
+    // 🎯 Abrir player de vídeo
+    const handlePlayVideo = (video = null) => {
+        if (video) {
+            setSelectedVideo(video);
+        } else if (videos.length > 0) {
+            // Usar o primeiro trailer disponível
+            const trailer = videos.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+            setSelectedVideo(trailer || videos[0]);
+        }
+        setShowVideoPlayer(true);
+    };
+
+    // 🎯 Fechar player
+    const handleCloseVideo = () => {
+        setShowVideoPlayer(false);
+        setSelectedVideo(null);
+    };
+
+    // 🎯 Buscar episódios de uma temporada
     const fetchSeasonEpisodes = async (seasonNumber) => {
         if (seasonDetails[seasonNumber]) {
             return;
@@ -60,7 +86,7 @@ const TVShowDetail = () => {
         }
     };
 
-    // Alternar expansão da temporada
+    // 🎯 Alternar expansão da temporada
     const toggleSeasonExpansion = async (seasonNumber) => {
         if (expandedSeason === seasonNumber) {
             setExpandedSeason(null);
@@ -72,7 +98,7 @@ const TVShowDetail = () => {
         }
     };
 
-    // Formatar duração do episódio
+    // 🎯 Formatar duração do episódio
     const formatRuntime = (minutes) => {
         if (!minutes) return '';
         if (minutes < 60) return `${minutes}min`;
@@ -81,14 +107,14 @@ const TVShowDetail = () => {
         return `${hours}h ${mins > 0 ? `${mins}min` : ''}`;
     };
 
-    // Obter cor baseada na avaliação
+    // 🎯 Obter cor baseada na avaliação
     const getRatingColor = (rating) => {
         if (rating >= 8) return '#2ecc71';
         if (rating >= 6) return '#f39c12';
         return '#e74c3c';
     };
 
-    // Detectar animes
+    // 🎯 Detectar animes
     const isAnime = (show) => {
         const animeKeywords = ['anime', 'animation', 'animação', 'japanese'];
         const title = show.name?.toLowerCase() || '';
@@ -101,7 +127,7 @@ const TVShowDetail = () => {
                );
     };
 
-    // Obter emoji do gênero
+    // 🎯 Obter emoji do gênero
     const getGenreEmoji = (genreName) => {
         const emojiMap = {
             'Animation': '🎌',
@@ -109,7 +135,7 @@ const TVShowDetail = () => {
             'Drama': '🎭',
             'Comedy': '😂',
             'Sci-Fi & Fantasy': '🚀',
-            'Fantasy': '🐉', // 👈 ADICIONADO
+            'Fantasy': '🐉',
             'Crime': '🔫',
             'Mystery': '🕵️',
             'Documentary': '📝',
@@ -141,6 +167,15 @@ const TVShowDetail = () => {
 
     return (
         <div className="tvshow-detail">
+            {/* 🎯 Player de Vídeo Modal */}
+            {showVideoPlayer && (
+                <VideoPlayer 
+                    video={selectedVideo}
+                    onClose={handleCloseVideo}
+                    title={tvShow.name}
+                />
+            )}
+
             {/* Banner Hero */}
             <div 
                 className="tvshow-detail__hero"
@@ -196,12 +231,42 @@ const TVShowDetail = () => {
                             {tvShow.overview}
                         </p>
 
+                        {/* 🎯 AÇÕES COM PLAYER DE VÍDEO */}
                         <div className="tvshow-detail__actions">
-                            <button className="tvshow-detail__button tvshow-detail__button--primary">
-                                ▶ Assistir
+                            <button 
+                                className="tvshow-detail__button tvshow-detail__button--primary"
+                                onClick={() => handlePlayVideo()}
+                                disabled={videos.length === 0}
+                            >
+                                ▶ {videos.length > 0 ? 'Assistir Trailer' : 'Trailer Indisponível'}
                             </button>
+                            
+                            {/* 🎯 LISTA DE VÍDEOS DISPONÍVEIS */}
+                            {videos.length > 1 && (
+                                <div className="tvshow-detail__video-options">
+                                    <button 
+                                        className="tvshow-detail__button tvshow-detail__button--secondary"
+                                        onClick={() => {
+                                            const trailers = videos.filter(v => v.type === 'Trailer');
+                                            if (trailers.length > 0) {
+                                                handlePlayVideo(trailers[0]);
+                                            }
+                                        }}
+                                    >
+                                        🎬 Ver Trailers ({videos.filter(v => v.type === 'Trailer').length})
+                                    </button>
+                                </div>
+                            )}
+                            
                             <FavoriteButton movie={tvShow} size="large" />
                         </div>
+
+                        {/* 🎯 Informação de vídeos disponíveis */}
+                        {videos.length === 0 && (
+                            <p className="tvshow-detail__no-videos">
+                                ⚠️ Nenhum trailer disponível para esta série
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -306,6 +371,37 @@ const TVShowDetail = () => {
                         ))}
                     </div>
                 </section>
+
+                {/* 🎯 Vídeos e Trailers */}
+                {videos.length > 0 && (
+                    <section className="tvshow-detail__section">
+                        <h2>🎬 Vídeos e Trailers</h2>
+                        <div className="tvshow-detail__videos">
+                            {videos.slice(0, 6).map(video => (
+                                <div key={video.id} className="video-thumbnail">
+                                    <div 
+                                        className="video-thumbnail__image"
+                                        onClick={() => handlePlayVideo(video)}
+                                    >
+                                        <img 
+                                            src={`https://img.youtube.com/vi/${video.key}/hqdefault.jpg`}
+                                            alt={video.name}
+                                        />
+                                        <div className="video-thumbnail__overlay">
+                                            <span className="video-thumbnail__play">▶</span>
+                                        </div>
+                                    </div>
+                                    <div className="video-thumbnail__info">
+                                        <h4>{video.name}</h4>
+                                        <span className="video-thumbnail__type">
+                                            {video.type} • {video.size}p
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* Elenco Principal */}
                 {tvShow.credits?.cast?.length > 0 && (

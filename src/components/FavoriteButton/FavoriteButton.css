@@ -7,31 +7,218 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+    font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .favorite-button:hover {
     background: rgba(0, 0, 0, 0.9); 
     transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.favorite-button:active {
+    transform: scale(0.95);
 }
 
 .favorite-button--active {
-    background: rgba(229, 9, 20, 0.8);
+    background: rgba(229, 9, 20, 0.9);
 }
 
+.favorite-button--active:hover {
+    background: rgba(229, 9, 20, 1);
+    border-color: rgba(229, 9, 20, 0.5);
+}
+
+/* Animação quando o botão é clicado para adicionar */
+.favorite-button--animating {
+    animation: heartBeat 0.6s ease;
+}
+
+/* Container do emoji */
+.favorite-button__emoji {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.favorite-button:hover .favorite-button__emoji {
+    transform: scale(1.1);
+}
+
+/* Efeito de pulso quando é ativado */
+.favorite-button__pulse {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid #e50914;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-out;
+    opacity: 0;
+}
+
+/* Tamanhos */
 .favorite-button--small {
-  width: 30px;
-  height: 30px;
-  font-size: 14px;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
 }
 
 .favorite-button--medium {
-  width: 40px;
-  height: 40px;
-  font-size: 18px;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
 }
 
 .favorite-button--large {
-  width: 50px;
-  height: 50px;
-  font-size: 22px;
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+}
+
+/* Animações */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.3);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Efeito de ripple no clique */
+.favorite-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.favorite-button:active::after {
+    width: 100%;
+    height: 100%;
+}
+
+/* Acessibilidade - foco visível */
+.favorite-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.5);
+}
+
+/* Melhor renderização de emojis em diferentes dispositivos */
+.favorite-button__emoji {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+/* Dark theme alternativo */
+@media (prefers-color-scheme: dark) {
+    .favorite-button {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .favorite-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* ========== RESPONSIVO ========== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .favorite-button--small {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+    
+    .favorite-button--medium {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+    
+    .favorite-button--large {
+        width: 46px;
+        height: 46px;
+        font-size: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .favorite-button--small {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+    
+    .favorite-button--medium {
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+    
+    .favorite-button--large {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* Mobile Pequeno */
+@media (max-width: 360px) {
+    .favorite-button--small {
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+    }
+    
+    .favorite-button--medium {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .favorite-button--large {
+        width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
+}
+
+/* Melhor compatibilidade com emojis */
+@supports not (font-family: 'Segoe UI Emoji') {
+    .favorite-button__emoji {
+        font-family: 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+    }
 }

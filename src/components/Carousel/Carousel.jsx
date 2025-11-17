@@ -1,32 +1,73 @@
-import React from 'react';
-
-// css
+import React, { useRef, useState, useEffect } from 'react';
 import './Carousel.css';
 
 const Carousel = ({ title, children }) => {
-    const scrollLeft = () => {  // 👈 CORRIGIDO: scrollLeft (um "f")
-        const container = document.getElementById(`carousel-${title}`);
-        container.scrollBy({ left: -300, behavior: 'smooth' });  // 👈 CORRIGIDO: scrollBy
+    const containerRef = useRef(null);
+    const [showLeftArrow, setShowLeftArrow] = useState(false);
+    const [showRightArrow, setShowRightArrow] = useState(true);
+
+    const checkScroll = () => {
+        if (containerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+            setShowLeftArrow(scrollLeft > 0);
+            setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10);
+        }
+    };
+
+    const scrollLeft = () => {
+        containerRef.current?.scrollBy({ left: -300, behavior: 'smooth' });
     };
 
     const scrollRight = () => {
-        const container = document.getElementById(`carousel-${title}`);
-        container.scrollBy({ left: 300, behavior: 'smooth' });
+        containerRef.current?.scrollBy({ left: 300, behavior: 'smooth' });
     };
+
+    const handleWheel = (e) => {
+        if (containerRef.current) {
+            e.preventDefault();
+            containerRef.current.scrollBy({
+                left: e.deltaY < 0 ? -300 : 300,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            container.addEventListener('scroll', checkScroll);
+            checkScroll(); // Check inicial
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', checkScroll);
+            }
+        };
+    }, []);
 
     return (
         <div className="carousel">
-            <h2 className="carousel__title">{title}</h2>  {/* 👈 double underscore */}
-            <div className="carousel__container">  {/* 👈 double underscore */}
-                <button className="carousel__button carousel__button--left" onClick={scrollLeft}>  {/* 👈 double underscore */}
+            <h2 className="carousel__title">{title}</h2>
+            <div className="carousel__container">
+                <button 
+                    className={`carousel__button carousel__button--left ${!showLeftArrow ? 'carousel__button--hidden' : ''}`}
+                    onClick={scrollLeft}
+                >
                     ‹
                 </button>
                 
-                <div className="carousel__content" id={`carousel-${title}`}>  {/* 👈 MUDOU: carousel__content */}
+                <div 
+                    className="carousel__content" 
+                    ref={containerRef}
+                    onWheel={handleWheel}
+                >
                     {children}
                 </div>
                 
-                <button className="carousel__button carousel__button--right" onClick={scrollRight}>  {/* 👈 double underscore */}
+                <button 
+                    className={`carousel__button carousel__button--right ${!showRightArrow ? 'carousel__button--hidden' : ''}`}
+                    onClick={scrollRight}
+                >
                     ›
                 </button>
             </div>

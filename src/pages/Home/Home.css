@@ -76,6 +76,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 140px;
 }
 
 .home__banner-button--primary {
@@ -85,6 +86,12 @@
 
 .home__banner-button--primary:hover {
   background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.home__banner-button--primary:active {
+  transform: translateY(0);
 }
 
 .home__banner-button--secondary {
@@ -94,6 +101,19 @@
 
 .home__banner-button--secondary:hover {
   background: rgba(109, 109, 110, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.home__banner-button--favorite {
+  background: #e50914 !important;
+  color: white !important;
+}
+
+.home__banner-button--favorite:hover {
+  background: #b8070f !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Conteúdo */
@@ -101,7 +121,26 @@
   padding-bottom: 40px;
 }
 
-/* Responsivo */
+/* Estados Vazios */
+.home__no-content {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.home__no-content h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.home__no-content p {
+  font-size: 16px;
+}
+
+/* ========== RESPONSIVO ========== */
+
+/* Tablet */
 @media (max-width: 768px) {
   .home__banner {
     height: 50vh;
@@ -119,5 +158,71 @@
   
   .home__banner-overview {
     font-size: 14px;
+    -webkit-line-clamp: 2;
+  }
+
+  .home__banner-button {
+    padding: 8px 20px;
+    font-size: 14px;
+    min-width: 120px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .home__banner {
+    height: 40vh;
+  }
+  
+  .home__banner-content {
+    left: 15px;
+    bottom: 40px;
+    max-width: 85%;
+  }
+  
+  .home__banner-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .home__banner-overview {
+    font-size: 12px;
+    -webkit-line-clamp: 2;
+    margin-bottom: 15px;
+  }
+  
+  .home__banner-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .home__banner-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    text-align: center;
+    min-width: auto;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Mobile Pequeno */
+@media (max-width: 360px) {
+  .home__banner {
+    height: 35vh;
+  }
+  
+  .home__banner-content {
+    left: 10px;
+    bottom: 30px;
+  }
+  
+  .home__banner-title {
+    font-size: 20px;
+  }
+  
+  .home__banner-overview {
+    font-size: 11px;
+    -webkit-line-clamp: 2;
   }
 }

@@ -1,60 +1,123 @@
 .favorites {
-    padding: 100px 40px 40px;
+    padding: 120px 40px 40px;
     min-height: 100vh;
     background: #141414;
     color: white;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
+/* Empty State */
 .favorites--empty {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 60vh;
+    min-height: 70vh;
     text-align: center;
 }
 
 .favorites__empty-content h1 {
     font-size: 48px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #e50914;
+    font-weight: bold;
 }
 
 .favorites__empty-content p {
     font-size: 18px;
     color: #aaa;
-    margin-bottom: 10px;
-    line-height: 1.5;
+    margin-bottom: 15px;
+    line-height: 1.6;
 }
 
+.favorites__empty-content p:first-of-type {
+    font-size: 20px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Header */
 .favorites__header {
     text-align: center;
     margin-bottom: 40px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 30px;
 }
 
 .favorites__header h1 {
     font-size: 48px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #e50914;
+    font-weight: bold;
 }
 
-.favorites__header p {
+.favorites__header > p {
     font-size: 18px;
     color: #aaa;
+    margin-bottom: 20px;
 }
 
+/* Filtros Básicos */
+.favorites__filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.favorites__filters button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #333;
+    color: #aaa;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.favorites__filters button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.favorites__filters button.active {
+    background: #e50914;
+    color: white;
+    border-color: #e50914;
+}
+
+/* Grid */
 .favorites__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    gap: 25px;
     justify-items: center;
 }
 
 .favorites__grid .movie-card {
     width: 100%;
     max-width: 200px;
+    transition: transform 0.3s ease;
 }
 
-/* responsividade */
+.favorites__grid .movie-card:hover {
+    transform: scale(1.05);
+}
+
+/* Loading State */
+.favorites .loading-container {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== RESPONSIVO ========== */
+
+/* Tablet */
 @media (max-width: 768px) {
     .favorites {
         padding: 100px 20px 20px;
@@ -64,9 +127,22 @@
         font-size: 36px;
     }
     
+    .favorites__header > p {
+        font-size: 16px;
+    }
+    
+    .favorites__filters {
+        gap: 10px;
+    }
+    
+    .favorites__filters button {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
     .favorites__grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
+        gap: 20px;
     }
     
     .favorites__grid .movie-card {
@@ -80,12 +156,32 @@
     .favorites__empty-content p {
         font-size: 16px;
     }
+    
+    .favorites__empty-content p:first-of-type {
+        font-size: 18px;
+    }
 }
 
+/* Mobile */
 @media (max-width: 480px) {
+    .favorites__header h1 {
+        font-size: 28px;
+    }
+    
+    .favorites__filters {
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .favorites__filters button {
+        width: 200px;
+        text-align: center;
+    }
+    
     .favorites__grid {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 12px;
+        gap: 15px;
     }
     
     .favorites__grid .movie-card {
@@ -98,5 +194,30 @@
     
     .favorites__empty-content p {
         font-size: 14px;
+    }
+    
+    .favorites__empty-content p:first-of-type {
+        font-size: 16px;
+    }
+}
+
+/* Mobile Pequeno */
+@media (max-width: 360px) {
+    .favorites {
+        padding: 90px 15px 15px;
+    }
+    
+    .favorites__grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+    
+    .favorites__grid .movie-card {
+        max-width: 120px;
+    }
+    
+    .favorites__filters button {
+        width: 180px;
+        padding: 8px 12px;
     }
 }

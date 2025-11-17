@@ -8,80 +8,107 @@ import { CATEGORIES } from '../../services/api';
 import './Categories.css';
 
 const Categories = () => {
-    // Categorias para Filmes
-    const movieCategories = [
-        { id: CATEGORIES.ACTION, name: '💥 Ação', type: 'movie', emoji: '💥' },
-        { id: CATEGORIES.COMEDY, name: '😂 Comédia', type: 'movie', emoji: '😂' },
-        { id: CATEGORIES.DRAMA, name: '🎭 Drama', type: 'movie', emoji: '🎭' },
-        { id: CATEGORIES.HORROR, name: '👻 Terror', type: 'movie', emoji: '👻' },
-        { id: CATEGORIES.FANTASY, name: '🐉 Fantasia', type: 'movie', emoji: '🐉' },
-        { id: CATEGORIES.ANIMATION, name: '🎬 Animação', type: 'movie', emoji: '🎬' },
-        { id: CATEGORIES.DOCUMENTARY, name: '📝 Documentário', type: 'movie', emoji: '📝' }
-    ];
+    // 🎯 Dados centralizados e organizados
+    const categoriesConfig = {
+        movies: [
+            { id: CATEGORIES.ACTION, name: 'Ação', emoji: '💥', description: 'Filmes cheios de adrenalina' },
+            { id: CATEGORIES.COMEDY, name: 'Comédia', emoji: '😂', description: 'Risadas garantidas' },
+            { id: CATEGORIES.DRAMA, name: 'Drama', emoji: '🎭', description: 'Histórias emocionantes' },
+            { id: CATEGORIES.HORROR, name: 'Terror', emoji: '👻', description: 'Suspense e sustos' },
+            { id: CATEGORIES.FANTASY, name: 'Fantasia', emoji: '🐉', description: 'Mundos mágicos' },
+            { id: CATEGORIES.ANIMATION, name: 'Animação', emoji: '🎬', description: 'Para todas as idades' },
+            { id: CATEGORIES.DOCUMENTARY, name: 'Documentário', emoji: '📝', description: 'Baseado em fatos reais' }
+        ],
+        tv: [
+            { id: CATEGORIES.ACTION, name: 'Ação', emoji: '💥', description: 'Séries cheias de adrenalina' },
+            { id: CATEGORIES.COMEDY, name: 'Comédia', emoji: '😂', description: 'Risadas garantidas' },
+            { id: CATEGORIES.DRAMA, name: 'Drama', emoji: '🎭', description: 'Histórias emocionantes' },
+            { id: CATEGORIES.HORROR, name: 'Terror', emoji: '👻', description: 'Suspense e sustos' },
+            { id: CATEGORIES.FANTASY, name: 'Fantasia', emoji: '🐉', description: 'Mundos mágicos' },
+            { id: CATEGORIES.ANIMATION, name: 'Animes', emoji: '🎌', description: 'Animações japonesas' },
+            { id: CATEGORIES.DOCUMENTARY, name: 'Documentário', emoji: '📝', description: 'Baseado em fatos reais' }
+        ]
+    };
 
-    // Categorias para Séries
-    const tvCategories = [
-        { id: CATEGORIES.ACTION, name: '💥 Ação', type: 'tv', emoji: '💥' },
-        { id: CATEGORIES.COMEDY, name: '😂 Comédia', type: 'tv', emoji: '😂' },
-        { id: CATEGORIES.DRAMA, name: '🎭 Drama', type: 'tv', emoji: '🎭' },
-        { id: CATEGORIES.HORROR, name: '👻 Terror', type: 'tv', emoji: '👻' },
-        { id: CATEGORIES.FANTASY, name: '🐉 Fantasia', type: 'tv', emoji: '🐉' },
-        { id: CATEGORIES.ANIMATION, name: '🎌 Animes', type: 'tv', emoji: '🎌' },
-        { id: CATEGORIES.DOCUMENTARY, name: '📝 Documentário', type: 'tv', emoji: '📝' }
-    ];
+    // 🎯 Componente de Card Reutilizável
+    const CategoryCard = ({ category, type }) => (
+        <Link 
+            to={`/category/${type}/${category.id}`}
+            className="category-card"
+            aria-label={`Explorar ${category.name} ${type === 'movie' ? 'filmes' : 'séries'}`}
+        >
+            <div className="category-card__emoji">
+                {category.emoji}
+            </div>
+            <div className="category-card__content">
+                <h3 className="category-card__name">
+                    {category.name}
+                </h3>
+                <p className="category-card__description">
+                    {category.description}
+                </p>
+                <span className="category-card__badge">
+                    {type === 'movie' ? '🎥 Filmes' : '📺 Séries'}
+                </span>
+            </div>
+        </Link>
+    );
 
     return (
         <div className="categories-page">
+            {/* 🎯 Header com Estatísticas */}
             <div className="categories-page__header">
-                <h1>Explorar Categorias</h1>
-                <p>Descubra filmes e séries por gênero</p>
+                <h1>🎭 Explorar Categorias</h1>
+                <p>Descubra {categoriesConfig.movies.length + categoriesConfig.tv.length} gêneros de filmes e séries</p>
+                <div className="categories-stats">
+                    <span className="categories-stat">
+                        <strong>{categoriesConfig.movies.length}</strong> categorias de filmes
+                    </span>
+                    <span className="categories-stat">
+                        <strong>{categoriesConfig.tv.length}</strong> categorias de séries
+                    </span>
+                </div>
             </div>
 
-            {/* Categorias de Filmes */}
+            {/* 🎯 Categorias de Filmes */}
             <section className="categories-section">
                 <h2 className="categories-section__title">
                     🎥 Filmes
                 </h2>
                 <div className="categories-grid">
-                    {movieCategories.map(category => (
-                        <Link 
+                    {categoriesConfig.movies.map(category => (
+                        <CategoryCard 
                             key={`movie-${category.id}`}
-                            to={`/category/movie/${category.id}`}
-                            className="category-card"
-                        >
-                            <div className="category-card__emoji">
-                                {category.emoji}
-                            </div>
-                            <span className="category-card__name">
-                                {category.name}
-                            </span>
-                        </Link>
+                            category={category}
+                            type="movie"
+                        />
                     ))}
                 </div>
             </section>
 
-            {/* Categorias de Séries */}
+            {/* 🎯 Categorias de Séries */}
             <section className="categories-section">
                 <h2 className="categories-section__title">
                     📺 Séries
                 </h2>
                 <div className="categories-grid">
-                    {tvCategories.map(category => (
-                        <Link 
+                    {categoriesConfig.tv.map(category => (
+                        <CategoryCard 
                             key={`tv-${category.id}`}
-                            to={`/category/tv/${category.id}`}
-                            className="category-card"
-                        >
-                            <div className="category-card__emoji">
-                                {category.emoji}
-                            </div>
-                            <span className="category-card__name">
-                                {category.name}
-                            </span>
-                        </Link>
+                            category={category}
+                            type="tv"
+                        />
                     ))}
                 </div>
             </section>
+
+            {/* 🎯 Call to Action */}
+            <div className="categories-cta">
+                <p>Não encontrou o que procurava?</p>
+                <Link to="/search" className="categories-cta__link">
+                    🔍 Fazer uma busca personalizada
+                </Link>
+            </div>
         </div>
     );
 };

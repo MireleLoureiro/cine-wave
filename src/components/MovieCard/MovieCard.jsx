@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // service
@@ -12,6 +12,8 @@ import './MovieCard.css';
 
 const MovieCard = ({ movie }) => {
     const navigate = useNavigate();
+    const [imageError, setImageError] = useState(false);
+    const [imageLoading, setImageLoading] = useState(true);
     
     const getMediaType = () => {
         // Se veio da busca "multi", usa media_type
@@ -35,13 +37,6 @@ const MovieCard = ({ movie }) => {
 
     const handleCardClick = () => {
         console.log('🎬 Navegando para:', detailUrl, 'Tipo:', mediaType);
-        console.log('📊 Dados do item:', {
-            id: movie.id,
-            title: movie.title || movie.name,
-            media_type: movie.media_type,
-            first_air_date: movie.first_air_date,
-            release_date: movie.release_date
-        });
         navigate(detailUrl);
     };
 
@@ -49,29 +44,86 @@ const MovieCard = ({ movie }) => {
         e.stopPropagation();
     };
 
+    const handleImageLoad = () => {
+        setImageLoading(false);
+    };
+
+    const handleImageError = () => {
+        setImageError(true);
+        setImageLoading(false);
+    };
+
+    // Texto reduzido para overview se necessário
+    const truncateText = (text, maxLength) => {
+        if (!text) return '';
+        if (text.length <= maxLength) return text;
+        return text.substr(0, maxLength) + '...';
+    };
+
     return (
         <div className="movie-card" onClick={handleCardClick}>
-            <img 
-                src={imageService.getPosterUrl(movie.poster_path, 'w300')} 
-                alt={movie.title || movie.name} 
-                className="movie-card__poster" 
-            />
+            <div className="movie-card__image-container">
+                {imageLoading && (
+                    <div className="movie-card__skeleton"></div>
+                )}
+                <img 
+                    src={imageError 
+                        ? '/images/placeholder-poster.jpg'  // Imagem fallback
+                        : imageService.getPosterUrl(movie.poster_path, 'w300')
+                    } 
+                    alt={movie.title || movie.name} 
+                    className={`movie-card__poster ${imageLoading ? 'movie-card__poster--hidden' : ''}`}
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
+                />
+                
+                {/* Overlay no hover */}
+                <div className="movie-card__overlay">
+                    <div className="movie-card__overlay-content">
+                        <h3 className="movie-card__overlay-title">
+                            {movie.title || movie.name}
+                        </h3>
+                        <p className="movie-card__overlay-year">
+                            {movie.release_date ? new Date(movie.release_date).getFullYear() : 
+                             movie.first_air_date ? new Date(movie.first_air_date).getFullYear() : 'N/A'}
+                        </p>
+                        <p className="movie-card__overlay-rating">
+                            ⭐ {movie.vote_average?.toFixed(1) || 'N/A'}
+                        </p>
+                        {movie.overview && (
+                            <p className="movie-card__overlay-overview">
+                                {truncateText(movie.overview, 120)}
+                            </p>
+                        )}
+                        <button className="movie-card__overlay-button">
+                            Ver Detalhes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Botão de favorito */}
             <div className="movie-card__favorite" onClick={handleFavoriteClick}>
                 <FavoriteButton movie={movie} size="small" />
             </div>
+
+            {/* Informações básicas (visíveis sempre) */}
             <div className="movie-card__info">  
-                <h3 className="movie-card__title">{movie.title || movie.name}</h3> 
+                <h3 className="movie-card__title">
+                    {truncateText(movie.title || movie.name, 25)}
+                </h3> 
                 <p className="movie-card__year">  
                     {movie.release_date ? new Date(movie.release_date).getFullYear() : 
                      movie.first_air_date ? new Date(movie.first_air_date).getFullYear() : 'N/A'}
                 </p>
                 <div className="movie-card__rating">
-                    ⭐ {movie.vote_average?.toFixed(1)}
+                    ⭐ {movie.vote_average?.toFixed(1) || 'N/A'}
                 </div>
-                {/* 👇 DEBUG: mostra o tipo (opcional - pode remover depois) */}
-                <div style={{fontSize: '10px', color: '#666', marginTop: '5px'}}>
-                    Tipo: {mediaType}
-                </div>
+            </div>
+
+            {/* Badge de tipo (opcional) */}
+            <div className="movie-card__type-badge">
+                {mediaType === 'tv' ? 'SÉRIE' : 'FILME'}
             </div>
         </div>
     );

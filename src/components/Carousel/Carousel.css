@@ -50,6 +50,10 @@
     opacity: 0;
 }
 
+.carousel__button--hidden {
+    display: none !important;
+}
+
 .carousel:hover .carousel__button {
     opacity: 1;
 }
