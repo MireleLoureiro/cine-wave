@@ -1,11 +1,19 @@
 // components/Header/Header.jsx (ATUALIZADO)
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
+// context
 import { useAuth } from "../../contexts/AuthContext";
 import { useFavorites } from "../../contexts/FavoritesContext";
+
+// image
 import logo from '../../assets/images/logo.png';
+
+// components
 import SearchBar from "../SearchBar/SearchBar";
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
+
+//css
 import './Header.css';
 
 const Header = () => {

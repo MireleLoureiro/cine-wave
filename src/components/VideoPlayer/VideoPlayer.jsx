@@ -1,5 +1,6 @@
-// components/VideoPlayer/VideoPlayer.jsx
 import React from 'react';
+
+// css
 import './VideoPlayer.css';
 
 const VideoPlayer = ({ video, onClose, title }) => {

@@ -35,10 +35,8 @@ export const AuthProvider = ({ children }) => {
 
     // 🎯 Login
     const login = async (email, password) => {
-        // Simulação de API - em produção, isso viria de um backend real
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                // Verificação básica - em produção, isso seria no backend
                 if (email && password.length >= 6) {
                     const userData = {
                         id: Date.now(),
@@ -96,7 +94,6 @@ export const AuthProvider = ({ children }) => {
                     createdAt: new Date().toISOString()
                 };
 
-                // Salvar usuário na "base de dados"
                 existingUsers.push(newUser);
                 localStorage.setItem('cinewave-users', JSON.stringify(existingUsers));
                 

@@ -1,17 +1,26 @@
-// components/ThemeToggle/ThemeToggle.jsx
 import React from 'react';
+
+// context
 import { useTheme } from '../../contexts/ThemeContext';
+
+// css
 import './ThemeToggle.css';
 
 const ThemeToggle = () => {
     const { isDarkMode, toggleTheme } = useTheme();
 
+    console.log('🎨 ThemeToggle renderizado - Tema atual:', isDarkMode ? 'dark' : 'light');
+
+    const handleClick = () => {
+        console.log('🖱️ Botão de tema clicado');
+        toggleTheme();
+    };
+
     return (
         <button 
             className="theme-toggle"
-            onClick={toggleTheme}
+            onClick={handleClick}
             aria-label={isDarkMode ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
-            title={isDarkMode ? 'Tema escuro' : 'Tema claro'}
         >
             <div className="theme-toggle__track">
                 <div className={`theme-toggle__thumb ${isDarkMode ? 'theme-toggle__thumb--dark' : 'theme-toggle__thumb--light'}`}>

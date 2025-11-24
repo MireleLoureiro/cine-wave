@@ -1,4 +1,3 @@
-// contexts/ThemeContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext();
@@ -12,49 +11,53 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-    const [isDarkMode, setIsDarkMode] = useState(true); // Default: dark mode
+    const [isDarkMode, setIsDarkMode] = useState(true);
 
-    // 🎯 Carregar tema salvo
+    // 🎯 DEBUG: Log inicial
+    console.log('🎨 ThemeProvider montado');
+
     useEffect(() => {
+        console.log('🔍 Verificando tema salvo...');
         const savedTheme = localStorage.getItem('cinewave-theme');
+        console.log('📁 Tema salvo no localStorage:', savedTheme);
+        
         if (savedTheme) {
             setIsDarkMode(savedTheme === 'dark');
+            console.log('✅ Tema carregado:', savedTheme);
         } else {
-            // Verificar preferência do sistema
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            console.log('🌐 Preferência do sistema:', prefersDark ? 'dark' : 'light');
             setIsDarkMode(prefersDark);
         }
     }, []);
 
-    // 🎯 Aplicar tema no HTML
     useEffect(() => {
+        console.log('🎯 Aplicando tema:', isDarkMode ? 'dark' : 'light');
         const root = document.documentElement;
         
         if (isDarkMode) {
             root.classList.add('dark-theme');
             root.classList.remove('light-theme');
+            console.log('🌙 Tema escuro aplicado');
         } else {
             root.classList.add('light-theme');
             root.classList.remove('dark-theme');
+            console.log('☀️ Tema claro aplicado');
         }
         
         localStorage.setItem('cinewave-theme', isDarkMode ? 'dark' : 'light');
+        console.log('💾 Tema salvo no localStorage');
     }, [isDarkMode]);
 
-    // 🎯 Alternar tema
     const toggleTheme = () => {
+        console.log('🔄 Alternando tema...');
         setIsDarkMode(prev => !prev);
-    };
-
-    // 🎯 Definir tema específico
-    const setTheme = (theme) => {
-        setIsDarkMode(theme === 'dark');
     };
 
     const value = {
         isDarkMode,
         toggleTheme,
-        setTheme,
+        setTheme: (theme) => setIsDarkMode(theme === 'dark'),
         currentTheme: isDarkMode ? 'dark' : 'light'
     };
 

@@ -1,6 +1,8 @@
 // components/SearchBar/SearchBar.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
+
+// css
 import './SearchBar.css'
 
 // Hook de debounce

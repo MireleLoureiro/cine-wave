@@ -1,120 +1,608 @@
-/* 🎯 VARIÁVEIS CSS PARA OS TEMAS */
-:root {
-    /* Cores base - Dark Theme (default) */
-    --bg-primary: #141414;
-    --bg-secondary: #1a1a1a;
-    --bg-tertiary: #2a2a2a;
-    --text-primary: #ffffff;
-    --text-secondary: #e5e5e5;
-    --text-muted: #aaa;
-    --accent-primary: #e50914;
-    --accent-secondary: #b2070f;
-    --border-color: #333;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --overlay-bg: rgba(0, 0, 0, 0.8);
+/* index.css - CSS COMPLETO COM DARK/LIGHT THEME */
+
+/* ========== RESET E BASE ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* 🎯 Light Theme */
-.light-theme {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --bg-tertiary: #e9ecef;
-    --text-primary: #212529;
-    --text-secondary: #495057;
-    --text-muted: #6c757d;
-    --accent-primary: #e50914;
-    --accent-secondary: #b2070f;
-    --border-color: #dee2e6;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --overlay-bg: rgba(255, 255, 255, 0.9);
+html {
+  scroll-behavior: smooth;
 }
 
-/* 🎯 APLICAR VARIÁVEIS AOS ELEMENTOS */
 body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Header */
+/* ========== VARIÁVEIS CSS - DARK THEME (DEFAULT) ========== */
+:root {
+  /* Cores */
+  --bg-primary: #141414;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e5e5;
+  --text-muted: #aaa;
+  --accent-primary: #e50914;
+  --accent-secondary: #b2070f;
+  --border-color: #333;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --overlay-bg: rgba(0, 0, 0, 0.8);
+  
+  /* Espaçamentos */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Bordas */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+}
+
+/* ========== LIGHT THEME ========== */
+html.light-theme {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --text-primary: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6c757d;
+  --accent-primary: #e50914;
+  --accent-secondary: #b2070f;
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --overlay-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* ========== APLICAÇÃO DAS VARIÁVEIS ========== */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== LAYOUT PRINCIPAL ========== */
+.App {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+main {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: calc(100vh - 80px);
+}
+
+.main-content {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ========== HEADER ========== */
 .header {
-    background: var(--bg-primary);
+  background: var(--bg-primary);
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
 }
 
 .header.scrolled {
-    background: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 2px 20px var(--shadow-color);
 }
 
-/* Cards e Containers */
-.movie-card,
-.profile-container,
-.login-container,
-.register-container,
-.search-page,
-.categories-page {
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+.header__nav-item {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
-/* Inputs */
-.form-input,
-.search-bar__input {
-    background: var(--bg-tertiary);
-    border-color: var(--border-color);
-    color: var(--text-primary);
+.header__nav-item:hover {
+  color: var(--accent-primary);
 }
 
-.form-input:focus {
-    border-color: var(--accent-primary);
+.header__nav-item.active {
+  color: var(--accent-primary);
 }
 
-/* Botões */
+.header__nav-item.active::after {
+  background: var(--accent-primary);
+}
+
+/* Botões de Auth */
 .header__login-button {
-    color: var(--text-primary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
 .header__login-button:hover {
-    background: var(--bg-tertiary);
+  background: var(--bg-tertiary);
 }
 
-/* Overlays e Modals */
-.movie-card__overlay,
-.login-prompt-overlay {
-    background: var(--overlay-bg);
+.header__register-button {
+  background: var(--accent-primary);
+  color: white;
+  transition: all 0.3s ease;
 }
 
-/* Textos */
-.movie-card__title,
-.profile-header h1,
-.login-header h1 {
-    color: var(--text-primary);
+.header__register-button:hover {
+  background: var(--accent-secondary);
 }
 
-.movie-card__year,
-.profile-header p,
-.login-header p {
-    color: var(--text-muted);
+/* Menu do Usuário */
+.header__user-dropdown {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 25px var(--shadow-color);
 }
 
-/* Bordas */
-.header__nav-item.active::after {
-    background: var(--accent-primary);
+.header__dropdown-item {
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
-/* Sombras */
-.header.scrolled {
-    box-shadow: 0 2px 20px var(--shadow-color);
+.header__dropdown-item:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ========== SEARCH BAR ========== */
+.search-bar__input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.search-bar__input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+}
+
+.search-bar__input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ========== MOVIE CARD ========== */
+.movie-card {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
 }
 
 .movie-card:hover {
-    box-shadow: 0 8px 25px var(--shadow-color);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px var(--shadow-color);
+  border-color: var(--accent-primary);
 }
 
-/* 🎯 Transições suaves para todos os elementos */
+.movie-card__info {
+  background: var(--bg-secondary);
+}
+
+.movie-card__title {
+  color: var(--text-primary);
+}
+
+.movie-card__year,
+.movie-card__rating {
+  color: var(--text-muted);
+}
+
+.movie-card__overlay {
+  background: var(--overlay-bg);
+  color: var(--text-primary);
+}
+
+.movie-card__type-badge {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* ========== FAVORITE BUTTON ========== */
+.favorite-button {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.favorite-button--active {
+  background: rgba(229, 9, 20, 0.9);
+  border-color: var(--accent-primary);
+}
+
+.favorite-button--disabled {
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0.6;
+}
+
+.light-theme .favorite-button {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.light-theme .favorite-button--disabled {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ========== PÁGINAS ========== */
+
+/* HOME PAGE */
+.home-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.hero-section {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
+}
+
+.section-title {
+  color: var(--text-primary);
+}
+
+/* SEARCH PAGE */
+.search-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.search-page__initial h2 {
+  color: var(--accent-primary);
+}
+
+.search-page__initial p {
+  color: var(--text-muted);
+}
+
+.search-page__suggestions {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.search-page__suggestion-tags span {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.search-page__suggestion-tags span:hover {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+}
+
+.search-page__filters {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.search-page__filter {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.search-page__filter:focus {
+  border-color: var(--accent-primary);
+}
+
+.search-page__error,
+.search-page__empty {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.search-page__error h3 {
+  color: var(--accent-primary);
+}
+
+/* CATEGORIES PAGE */
+.categories-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.categories-grid__item {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.categories-grid__item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+/* FAVORITES PAGE */
+.favorites-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.favorites-empty {
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+/* PROFILE PAGE */
+.profile-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.profile-container {
+  background: var(--bg-primary);
+}
+
+.profile-header h1 {
+  color: var(--accent-primary);
+}
+
+.profile-header p {
+  color: var(--text-muted);
+}
+
+.profile-info,
+.profile-stats,
+.profile-actions-section {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.profile-field label {
+  color: var(--text-muted);
+}
+
+.profile-field span {
+  color: var(--text-primary);
+}
+
+.stat-item {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.stat-number {
+  color: var(--accent-primary);
+}
+
+.stat-label {
+  color: var(--text-muted);
+}
+
+.action-button {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.action-button:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--accent-primary);
+}
+
+.action-button.danger {
+  background: rgba(229, 9, 20, 0.1);
+  border-color: var(--accent-primary);
+}
+
+.action-button.danger:hover:not(:disabled) {
+  background: rgba(229, 9, 20, 0.2);
+}
+
+/* LOGIN/REGISTER PAGES */
+.login-page,
+.register-page {
+  background: var(--bg-primary);
+}
+
+.login-container,
+.register-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.login-header h1,
+.register-header h1 {
+  color: var(--accent-primary);
+}
+
+.login-header p,
+.register-header p {
+  color: var(--text-muted);
+}
+
+.form-label {
+  color: var(--text-primary);
+}
+
+.form-input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: var(--accent-primary);
+  background: var(--bg-secondary);
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.error-message {
+  color: var(--accent-primary);
+}
+
+.global-error {
+  background: rgba(229, 9, 20, 0.1);
+  border: 1px solid rgba(229, 9, 20, 0.3);
+  color: var(--accent-primary);
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #4caf50;
+}
+
+.login-button,
+.register-button {
+  background: var(--accent-primary);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover:not(:disabled),
+.register-button:hover:not(:disabled) {
+  background: var(--accent-secondary);
+}
+
+.demo-button {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.demo-button:hover:not(:disabled) {
+  background: var(--bg-secondary);
+}
+
+/* MOVIE/TV DETAIL PAGES */
+.movie-detail-page,
+.tv-detail-page {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.detail-hero {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+}
+
+.detail-info h1,
+.detail-info h2,
+.detail-info h3 {
+  color: var(--text-primary);
+}
+
+.detail-info p {
+  color: var(--text-muted);
+}
+
+/* ========== COMPONENTES ========== */
+
+/* LOADING */
+.loading-container {
+  background: var(--overlay-bg);
+  color: var(--text-primary);
+}
+
+/* THEME TOGGLE */
+.theme-toggle__track {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+.theme-toggle__thumb--dark {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.theme-toggle__thumb--light {
+  background: linear-gradient(135deg, #ffd89b, #19547b);
+}
+
+/* ========== UTILITÁRIOS ========== */
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.bg-secondary {
+  background: var(--bg-secondary) !important;
+}
+
+.border-color {
+  border-color: var(--border-color) !important;
+}
+
+/* ========== TRANSITIONS GLOBAIS ========== */
 * {
-    transition: background-color 0.3s ease, 
-                color 0.3s ease, 
-                border-color 0.3s ease,
-                box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 768px) {
+  .header__container {
+    padding: 0 20px;
+  }
+  
+  .movie-card {
+    max-width: 150px;
+  }
+  
+  .search-page,
+  .categories-page,
+  .favorites-page {
+    padding: 100px 20px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__container {
+    padding: 0 15px;
+  }
+  
+  .movie-card {
+    max-width: 130px;
+  }
+  
+  .search-page,
+  .categories-page,
+  .favorites-page {
+    padding: 90px 15px 15px;
+  }
+}
+
+/* ========== GARANTIAS FINAIS ========== */
+.light-theme main,
+.light-theme .main-content,
+.light-theme [class*="page"],
+.light-theme [class*="content"] {
+  background: white !important;
+  color: #212529 !important;
+}
+
+.light-theme .App {
+  background: white !important;
+}
+
+/* Force light theme backgrounds */
+.light-theme {
+  background: white !important;
+}
+
+.light-theme body {
+  background: white !important;
+  color: #212529 !important;
 }

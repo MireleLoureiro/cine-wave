@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+
+// css
 import './Carousel.css';
 
 const Carousel = ({ title, children }) => {

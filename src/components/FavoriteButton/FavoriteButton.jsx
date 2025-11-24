@@ -18,12 +18,10 @@ const FavoriteButton = ({ movie, size = 'medium' }) => {
         e.preventDefault();
         e.stopPropagation();
         
-        // 🎯 Se não estiver logado, não faz nada (apenas mostra o cadeado)
         if (!isAuthenticated) {
             return;
         }
         
-        // Trigger animation
         if (!isActive) {
             setIsAnimating(true);
             setTimeout(() => setIsAnimating(false), 600);
@@ -33,9 +31,9 @@ const FavoriteButton = ({ movie, size = 'medium' }) => {
     };
 
     const getEmoji = () => {
-        if (!isAuthenticated) return '🔒'; // Cadeado se não logado
-        if (isActive) return '❤️'; // Coração preenchido
-        return '🤍'; // Coração vazio
+        if (!isAuthenticated) return '🔒';
+        if (isActive) return '❤️';
+        return '🤍';
     };
 
     const getTooltipText = () => {
@@ -65,7 +63,6 @@ const FavoriteButton = ({ movie, size = 'medium' }) => {
                 {getEmoji()}
             </span>
             
-            {/* Efeito de pulso quando é ativado */}
             {isActive && <div className="favorite-button__pulse"></div>}
         </button>
     );

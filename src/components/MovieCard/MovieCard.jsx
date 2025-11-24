@@ -36,7 +36,6 @@ const MovieCard = ({ movie }) => {
     const detailUrl = `/${mediaType}/${movie.id}`;
 
     const handleCardClick = () => {
-        console.log('🎬 Navegando para:', detailUrl, 'Tipo:', mediaType);
         navigate(detailUrl);
     };
 
@@ -68,7 +67,7 @@ const MovieCard = ({ movie }) => {
                 )}
                 <img 
                     src={imageError 
-                        ? '/images/placeholder-poster.jpg'  // Imagem fallback
+                        ? '/images/placeholder-poster.jpg' 
                         : imageService.getPosterUrl(movie.poster_path, 'w300')
                     } 
                     alt={movie.title || movie.name} 
