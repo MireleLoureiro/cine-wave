@@ -1,4 +1,3 @@
-/* pages/Profile/Profile.css */
 .profile-page {
     padding: 120px 40px 40px;
     min-height: 100vh;
@@ -18,7 +17,7 @@
 
 .profile-header h1 {
     font-size: 36px;
-    color: #e50914;
+    color: #48cac2;
     margin-bottom: 10px;
 }
 
@@ -49,7 +48,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: #e50914;
+    background: #48cac2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -93,7 +92,7 @@
 }
 
 .profile-edit-button {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -105,7 +104,7 @@
 }
 
 .profile-edit-button:hover {
-    background: #f40612;
+    background: #86d0cc;
 }
 
 .profile-logout-button {
@@ -153,7 +152,7 @@
 
 .form-input:focus {
     outline: none;
-    border-color: #e50914;
+    border-color: #48cac2;
     background: rgba(255, 255, 255, 0.15);
 }
 
@@ -198,7 +197,7 @@
 }
 
 .profile-save-button {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -211,7 +210,7 @@
 }
 
 .profile-save-button:hover:not(:disabled) {
-    background: #f40612;
+    background: #86d0cc;
 }
 
 .profile-save-button:disabled {
@@ -271,7 +270,7 @@
     display: block;
     font-size: 32px;
     font-weight: bold;
-    color: #e50914;
+    color: #48cac2;
     margin-bottom: 8px;
 }
 
@@ -314,7 +313,7 @@
 
 .action-button:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.15);
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 .action-button:disabled {
@@ -323,12 +322,12 @@
 }
 
 .action-button.danger {
-    background: rgba(229, 9, 20, 0.1);
-    border-color: #e50914;
+    background: rgba(134, 208, 204, 0.1);
+    border-color: #48cac2;
 }
 
 .action-button.danger:hover:not(:disabled) {
-    background: rgba(229, 9, 20, 0.2);
+    background: rgba(134, 208, 204, 0.2);
 }
 
 /* ========== RESPONSIVO ========== */

@@ -22,7 +22,7 @@
 
 .category-results__back-button:hover {
     background: rgba(255, 255, 255, 0.2);
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 /* 🎯 Header */
@@ -36,7 +36,7 @@
 .category-results__header h1 {
     font-size: 48px;
     margin-bottom: 15px;
-    color: #e50914;
+    color: #48cac2;
     font-weight: bold;
 }
 
@@ -88,7 +88,7 @@
 
 .category-results__filter-select:focus {
     outline: none;
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 /* 🎯 Grid */
@@ -122,7 +122,7 @@
 
 .category-results__pagination-button:hover:not(:disabled) {
     background: rgba(255, 255, 255, 0.2);
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 .category-results__pagination-button:disabled {
@@ -148,7 +148,7 @@
 .category-results__empty h3 {
     font-size: 24px;
     margin-bottom: 16px;
-    color: #e50914;
+    color: #48cac2;
 }
 
 .category-results__empty p {
@@ -161,7 +161,7 @@
 }
 
 .category-results__empty-button {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -172,7 +172,7 @@
 }
 
 .category-results__empty-button:hover {
-    background: #f40612;
+    background: #86d0cc;
 }
 
 /* 🎯 Loading para páginas extras */

@@ -14,7 +14,7 @@
 .search-page__header h1 {
     font-size: 48px;
     margin-bottom: 30px;
-    color: #e50914;
+    color: #48cac2;
     font-weight: bold;
 }
 
@@ -39,8 +39,8 @@
 
 .search-page__input:focus {
     background: rgba(255, 255, 255, 0.15);
-    border-color: #e50914;
-    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.2);
+    border-color: #48cac2;
+    box-shadow: 0 0 0 3px rgba(134, 208, 204, 0.2);
 }
 
 .search-page__input::placeholder {
@@ -109,13 +109,13 @@
 
 .search-page__filter:hover {
     background: rgba(255, 255, 255, 0.15);
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 .search-page__filter:focus {
     outline: none;
-    border-color: #e50914;
-    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+    border-color: #48cac2;
+    box-shadow: 0 0 0 2px rgba(134, 208, 204, 0.2);
 }
 
 /* Informações dos Resultados */
@@ -173,7 +173,7 @@
 }
 
 .search-page__retry-button {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -185,7 +185,7 @@
 }
 
 .search-page__retry-button:hover {
-    background: #f40612;
+    background: #86d0cc;
 }
 
 .search-page__empty,
@@ -200,7 +200,7 @@
 .search-page__initial h2 {
     font-size: 32px;
     margin-bottom: 20px;
-    color: #e50914;
+    color: #48cac2;
 }
 
 .search-page__empty p,
@@ -240,7 +240,7 @@
 }
 
 .search-page__suggestion-tags span:hover {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     transform: translateY(-2px);
 }

@@ -1,4 +1,3 @@
-// components/SearchBar/SearchBar.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 
@@ -32,7 +31,7 @@ const SearchBar = ({
     
     const debouncedQuery = useDebounce(query, 500);
 
-    // 🎯 NOVO: Sincroniza com initialValue
+    // Sincroniza com initialValue
     useEffect(() => {
         setQuery(initialValue);
     }, [initialValue]);

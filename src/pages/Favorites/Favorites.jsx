@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useFavorites } from '../../contexts/FavoritesContext';
+
+// components
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Loading from '../../components/Loading/Loading';
+
+// css
 import './Favorites.css';
 
 const Favorites = () => {

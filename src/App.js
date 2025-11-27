@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // components
 import Header from './components/Header/Header';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import Footer from './components/Footer/Footer';
 
 // context
 import { AuthProvider } from './contexts/AuthContext';
@@ -64,6 +65,7 @@ function App() {
                   />
                 </Routes>
               </main>
+              <Footer />
             </div>
           </BrowserRouter>
         </FavoritesProvider>

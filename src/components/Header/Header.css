@@ -36,7 +36,7 @@
 }
 
 .header__logo-image {
-    height: 35px;
+    height: 45px;
     width: auto;
     transition: transform 0.3s ease;
 }
@@ -123,7 +123,7 @@
 }
 
 .header__nav-item.active {
-    color: #e50914;
+    color: #48cac2;
 }
 
 .header__nav-item.active::after {
@@ -133,7 +133,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: #e50914;
+    background: #48cac2;
     border-radius: 2px;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .header__register-button {
-    background: #e50914;
+    background: #48cac2;
     color: white;
     text-decoration: none;
     padding: 8px 20px;
@@ -172,7 +172,7 @@
 }
 
 .header__register-button:hover {
-    background: #f40612;
+    background: #86d0cc;
     transform: translateY(-1px);
 }
 
@@ -202,7 +202,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e50914, #b2070f);
+    background: linear-gradient(135deg, #48cac2, #86d0cc);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -279,7 +279,7 @@
 }
 
 .header__logout {
-    color: #e50914 !important;
+    color: #48cac2 !important;
     border-top: 1px solid #333;
     margin-top: 5px;
     padding-top: 12px;
@@ -515,7 +515,7 @@
 .header__user-button:focus-visible,
 .header__search-toggle:focus-visible,
 .header__menu-toggle:focus-visible {
-    outline: 2px solid #e50914;
+    outline: 2px solid #48cac2;
     outline-offset: 2px;
 }
 

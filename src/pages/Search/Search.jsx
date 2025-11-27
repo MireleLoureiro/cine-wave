@@ -1,9 +1,14 @@
-// pages/Search/Search.jsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
+
+// service
 import { searchService } from '../../services/api';
+
+// components
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Loading from '../../components/Loading/Loading';
+
+// css
 import './Search.css';
 
 const Search = () => {

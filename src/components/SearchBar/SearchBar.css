@@ -6,7 +6,7 @@
 .search-bar__container {
     position: relative;
     display: flex;
-    background: rgba(255, 255, 255, 0.1); /* 👈 CORRIGIDO: removi o 5 extra */
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -15,8 +15,8 @@
 
 .search-bar__container:focus-within {
     background: rgba(255, 255, 255, 0.15);
-    border-color: #e50914;
-    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+    border-color: #48cac2;
+    box-shadow: 0 0 0 2px rgba(134, 208, 204, 0.2);
 }
 
 .search-bar__input {
@@ -67,7 +67,7 @@
 
 /* Botão de Busca */
 .search-bar__button {
-    background: #e50914;
+    background: #48cac2;
     border: none;
     padding: 12px 20px;
     color: white;
@@ -81,7 +81,7 @@
 }
 
 .search-bar__button:hover:not(:disabled) {
-    background: #f40612;
+    background: #86d0cc;
     transform: scale(1.05);
 }
 
@@ -92,7 +92,7 @@
 }
 
 .search-bar__button--loading {
-    background: #b8070f !important;
+    background: #86d0cc !important;
 }
 
 /* Estados de foco para acessibilidade */
@@ -106,7 +106,7 @@
 }
 
 .search-bar__clear:focus {
-    outline: 2px solid #e50914;
+    outline: 2px solid #48cac2;
     outline-offset: 1px;
 }
 

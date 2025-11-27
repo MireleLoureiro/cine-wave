@@ -106,12 +106,12 @@
 }
 
 .home__banner-button--favorite {
-  background: #e50914 !important;
+  background: #48cac2 !important;
   color: white !important;
 }
 
 .home__banner-button--favorite:hover {
-  background: #b8070f !important;
+  background: #86d0cc !important;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }

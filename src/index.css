@@ -26,8 +26,8 @@ body {
   --text-primary: #ffffff;
   --text-secondary: #e5e5e5;
   --text-muted: #aaa;
-  --accent-primary: #e50914;
-  --accent-secondary: #b2070f;
+  --accent-primary: #48cac2;
+  --accent-secondary: #86d0cc;
   --border-color: #333;
   --shadow-color: rgba(0, 0, 0, 0.5);
   --overlay-bg: rgba(0, 0, 0, 0.8);
@@ -54,8 +54,8 @@ html.light-theme {
   --text-primary: #212529;
   --text-secondary: #495057;
   --text-muted: #6c757d;
-  --accent-primary: #e50914;
-  --accent-secondary: #b2070f;
+  --accent-primary: #48cac2;
+  --accent-secondary: #86d0cc;
   --border-color: #dee2e6;
   --shadow-color: rgba(0, 0, 0, 0.1);
   --overlay-bg: rgba(0, 0, 0, 0.1);
@@ -162,7 +162,7 @@ main {
 
 .search-bar__input:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+  box-shadow: 0 0 0 2px rgba(134, 208, 204, 0.2);
 }
 
 .search-bar__input::placeholder {
@@ -215,7 +215,7 @@ main {
 }
 
 .favorite-button--active {
-  background: rgba(229, 9, 20, 0.9);
+  background: rgba(134, 208, 204, 0.9);
   border-color: var(--accent-primary);
 }
 
@@ -403,7 +403,7 @@ main {
 }
 
 .action-button.danger:hover:not(:disabled) {
-  background: rgba(229, 9, 20, 0.2);
+  background: rgba(134, 208, 204, 0.2);
 }
 
 /* LOGIN/REGISTER PAGES */

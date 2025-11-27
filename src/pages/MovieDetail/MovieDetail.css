@@ -23,7 +23,7 @@
 
 .movie-detail__back-button:hover {
     background: rgba(0, 0, 0, 0.9);
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 .movie-detail__hero {
@@ -109,7 +109,7 @@
 }
 
 .movie-detail__adult {
-    background: #e50914;
+    background: #48cac2;
     color: white;
 }
 
@@ -118,7 +118,7 @@
     font-style: italic;
     color: #ccc;
     margin-bottom: 20px;
-    border-left: 3px solid #e50914;
+    border-left: 3px solid #48cac2;
     padding-left: 15px;
 }
 
@@ -174,12 +174,12 @@
 }
 
 .movie-detail__button--primary {
-    background: #e50914;
+    background: #48cac2;
     color: white;
 }
 
 .movie-detail__button--primary:hover {
-    background: #f40612;
+    background: #86d0cc;
     transform: translateY(-2px);
 }
 
@@ -220,7 +220,7 @@
     font-size: 28px;
     margin-bottom: 24px;
     color: white;
-    border-bottom: 2px solid #e50914;
+    border-bottom: 2px solid #48cac2;
     padding-bottom: 8px;
     display: inline-block;
 }
@@ -252,7 +252,7 @@
     object-fit: cover;
     margin: 0 auto 12px;
     display: block;
-    border: 2px solid #e50914;
+    border: 2px solid #48cac2;
 }
 
 .cast-card__info h3 {
@@ -290,7 +290,7 @@
 
 .crew-card p {
     font-size: 14px;
-    color: #e50914;
+    color: #48cac2;
     font-weight: 500;
 }
 
@@ -314,7 +314,7 @@
 .movie-detail__error h1 {
     font-size: 48px;
     margin-bottom: 16px;
-    color: #e50914;
+    color: #48cac2;
 }
 
 .movie-detail__error p {

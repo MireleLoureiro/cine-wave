@@ -1,7 +1,10 @@
-// pages/Profile/Profile.jsx
 import React, { useState } from 'react';
+
+// context
 import { useAuth } from '../../contexts/AuthContext';
 import { useFavorites } from '../../contexts/FavoritesContext';
+
+// css
 import './Profile.css';
 
 const Profile = () => {

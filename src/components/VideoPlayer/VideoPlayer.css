@@ -1,4 +1,3 @@
-/* components/VideoPlayer/VideoPlayer.css */
 .video-player-overlay {
     position: fixed;
     top: 0;
@@ -85,17 +84,17 @@
 }
 
 .video-player-external-link {
-    color: #e50914;
+    color: #48cac2;
     text-decoration: none;
     margin-top: 15px;
     padding: 10px 20px;
-    border: 1px solid #e50914;
+    border: 1px solid #48cac2;
     border-radius: 4px;
     transition: all 0.3s ease;
 }
 
 .video-player-external-link:hover {
-    background: #e50914;
+    background: #48cac2;
     color: white;
 }
 

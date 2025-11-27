@@ -19,7 +19,7 @@
 .favorites__empty-content h1 {
     font-size: 48px;
     margin-bottom: 30px;
-    color: #e50914;
+    color: #48cac2;
     font-weight: bold;
 }
 
@@ -47,7 +47,7 @@
 .favorites__header h1 {
     font-size: 48px;
     margin-bottom: 15px;
-    color: #e50914;
+    color: #48cac2;
     font-weight: bold;
 }
 
@@ -84,9 +84,9 @@
 }
 
 .favorites__filters button.active {
-    background: #e50914;
+    background: #48cac2;
     color: white;
-    border-color: #e50914;
+    border-color: #48cac2;
 }
 
 /* Grid */
