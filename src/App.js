@@ -30,7 +30,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <FavoritesProvider>
-          <BrowserRouter>
+          <BrowserRouter basename='/cine-wave'>
             <div className="App">
               <Header />
               <main>
