@@ -1,28 +1,33 @@
 # 🎬 Cine-Wave
 
-Uma aplicação web moderna para catálogo de filmes, desenvolvida com **React**. Explore títulos, visualize detalhes e navegue por uma interface responsiva e intuitiva, consumindo dados em tempo real via API REST.
+> Uma aplicação web moderna para catálogo de filmes, desenvolvida com **React**.  
+> 🔗 **Demo ao vivo**: [https://mireleloureiro.github.io/cine-wave/](https://mireleloureiro.github.io/cine-wave/)
+
+![Cine-Wave Preview](./public/preview.png)
 
 ## 🚀 Funcionalidades
 - 📺 Catálogo dinâmico com renderização assíncrona de dados
 - 🔍 Busca e filtros para navegação rápida
 - 📱 Layout 100% responsivo (mobile, tablet e desktop)
-- ⚡ Gerenciamento de estado com React Hooks (`useState`, `useEffect`, `useContext`)
+- ⚡ Gerenciamento de estado com React Hooks (`useState`, `useEffect`)
 - 🧩 Arquitetura baseada em componentes reutilizáveis
-- 🛣️ Roteamento cliente-side para navegação fluida
+- 🛣️ Roteamento cliente-side com React Router DOM
 
 ## 🛠️ Tecnologias Utilizadas
 | Categoria | Stack |
 |-----------|-------|
 | **Frontend** | React, JavaScript (ES6+), HTML5, CSS3 |
 | **Roteamento** | React Router DOM |
-| **API** | Fetch/Axios + RESTful API externa |
+| **API** | Fetch API + RESTful API externa (TMDB/Omdb) |
+| **Build Tool** | Create React App |
+| **Deploy** | GitHub Pages |
 | **Ferramentas** | Git, GitHub, VS Code, npm |
 
 ## 📦 Como Executar Localmente
 
 ### Pré-requisitos
 - Node.js (v16 ou superior)
-- npm ou yarn
+- npm
 
 ### Instalação
 ```bash
@@ -34,4 +39,4 @@ cd cine-wave
 npm install
 
 # 3. Inicie o servidor de desenvolvimento
-npm run dev
+npm start
